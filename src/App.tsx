@@ -10,6 +10,12 @@ import Deals from './components/Deals';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Function to toggle sidebar
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   const getPageComponent = () => {
     switch (currentPage) {
@@ -23,19 +29,31 @@ function App() {
         return <Messages />;
       case 'schedule':
         return <Schedule />;
-        case 'deals':
-          return <Deals />;
+      case 'deals':
+        return <Deals />;
       default:
         return <Dashboard />;
     }
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <LeftNav currentPage={currentPage} onPageChange={setCurrentPage} />
-      <div className="flex-1 flex flex-col">
-        <Header title={currentPage.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} />
-        {getPageComponent()}
+    <div className='' >
+      <div className="flex  h-[100%] w-[100%] bg-gray-50">
+        <div className='h-[100%] sticky top-0 left-0 z-[999] md:h-full md:w-[220px]'>
+          <LeftNav
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+            isOpen={sidebarOpen}
+            setIsOpen={setSidebarOpen}
+          />
+        </div>
+        <div className="flex flex-col bg-gray-50 w-[100%]  overflow-hidden md:w-[calc(100%-220px)]" style={{ height: '100%' }}>
+          <Header
+            title={currentPage.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+            toggleSidebar={toggleSidebar}
+          />
+          {getPageComponent()}
+        </div>
       </div>
     </div>
   );

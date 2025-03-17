@@ -1,0 +1,35 @@
+{
+    "countries": [
+      {
+        "name": "Mexico",
+        "progress": 24,
+        "color": "#BFA767"
+      },
+      {
+        "name": "Canada",
+        "progress": 18,
+        "color": "#BFA767"
+      },
+      {
+        "name": "United Kingdom",
+        "progress": 16,
+        "color": "#222222"
+      },
+      {
+        "name": "India",
+        "progress": 12,
+        "color": "#222222"
+      },
+      {
+        "name": "France",
+        "progress": 9,
+        "color": "#83827E"
+      },
+      {
+        "name": "Australia",
+        "progress": 9,
+        "color": "#83827E"
+      }
+    ]
+  }
+  

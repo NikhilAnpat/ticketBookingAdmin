@@ -1,0 +1,28 @@
+[
+    {
+      "Routes": "Paris (CDG) - New York (JFK)",
+      "km": 5834,
+      "passengers": 160000
+    },
+    {
+      "Routes": "Hong Kong (HKG) - Los Angeles (LAX)",
+      "km": 11062,
+      "passengers": 130000
+    },
+    {
+      "Routes": "Frankfurt (FRA) - Bangkok (BKK)",
+      "km": 8927,
+      "passengers": 120000
+    },
+    {
+      "Routes": "Los Angeles (LAX) - Tokyo (HND)",
+      "km": 8236,
+      "passengers": 110000
+    },
+    {
+      "Routes": "Singapore (SIN) - London (LHR)",
+      "km": 10885,
+      "passengers": 100000
+    }
+  ]
+  
