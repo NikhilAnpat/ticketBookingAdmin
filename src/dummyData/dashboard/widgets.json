@@ -1,0 +1,41 @@
+
+
+[
+    {
+      "title": "Completed Flights",
+      "icon": "Plane",
+      "numb": 125,
+      "hike": {
+        "sign": "up",
+        "per": "1.35%"
+      }
+    },
+    {
+      "title": "Active Flights",
+      "icon": "Ship",
+      "numb": 80,
+      "hike": {
+        "sign": "up",
+        "per": "3.68%"
+      }
+    },
+    {
+      "title": "Canceled Flights",
+      "icon": "X",
+      "numb": 25,
+      "hike": {
+        "sign": "down",
+        "per": "1.45%"
+      }
+    },
+    {
+      "title": "Total Revenue",
+      "icon": "DollarSign",
+      "numb": "$15,000",
+      "hike": {
+        "sign": "up",
+        "per": "5.94%"
+      }
+    }
+  ]
+  
