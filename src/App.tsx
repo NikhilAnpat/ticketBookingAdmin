@@ -7,6 +7,7 @@ import FlightTracking from './components/FlightTracking';
 import Messages from './components/Messages';
 import Schedule from './components/Schedule';
 import Deals from './components/Deals';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
@@ -48,6 +49,7 @@ function App() {
           />
         </div>
         <div className="flex flex-col bg-gray-50 w-[100%]  overflow-hidden md:w-[calc(100%-220px)]" style={{ height: '100%' }}>
+          
           <Header
             title={currentPage.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
             toggleSidebar={toggleSidebar}

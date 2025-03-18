@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { DateRange } from 'react-date-range';
+import { DateRange, Range } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import filterdata from '../dummyData/deals/Deles.json';
+import filterdata from '../dummyData/deals/Deals';
+import { StarIcon } from 'lucide-react';
 
 interface Promo {
     title: string;
@@ -10,15 +11,15 @@ interface Promo {
     discount: string;
     promoPeriod: string;
     image: string;
-    price: number;
+    price: string;
     rating: number;
 }
 
 export default function Filter({ onApply }: { onApply: (filteredData: Promo[]) => void }) {
-    const [state, setState] = useState([
+    const [state, setState] = useState<Range[]>([
         {
-            startDate: new Date(),
-            endDate: null,
+            startDate: undefined,
+            endDate: undefined,
             key: 'selection'
         }
     ]);
@@ -26,28 +27,48 @@ export default function Filter({ onApply }: { onApply: (filteredData: Promo[]) =
     const [selectedRating, setSelectedRating] = useState<number | null>(null);
 
     const handleApplyFilter = () => {
-        const filtered = filterdata.filter((item) => {
-            const startDate = state[0]?.startDate;
-            const endDate = state[0]?.endDate || new Date();
-            const promoStartDate = new Date(item.promoPeriod.split(' - ')[0]);
-            const promoEndDate = new Date(item.promoPeriod.split(' - ')[1]);
+        const startDate = state[0].startDate;
+        const endDate = state[0].endDate;
 
-            const isWithinDateRange = promoStartDate >= startDate && promoEndDate <= endDate;
-            const isDiscountMatched = selectedDiscounts.length === 0 || selectedDiscounts.includes(parseInt(item.discount));
-            const isRatingMatched = selectedRating === null || item.rating === selectedRating;
+        const filtered = filterdata.filter((item) => {
+            const [promoStartStr, promoEndStr] = item.promoPeriod.split(' - ');
+            const promoStartDate = new Date(promoStartStr);
+            const promoEndDate = new Date(promoEndStr);
+
+            if (isNaN(promoStartDate.getTime()) || isNaN(promoEndDate.getTime())) {
+                console.warn("Invalid promo period:", item.promoPeriod);
+                return false;
+            }
+
+            const discountValue = parseInt(item.discount.replace('%', ''));
+
+            let isWithinDateRange = true;
+            if (startDate && endDate) {
+                isWithinDateRange = 
+                    (promoStartDate <= endDate && promoEndDate >= startDate);
+            }
+
+            const isDiscountMatched = 
+                selectedDiscounts.length === 0 || 
+                selectedDiscounts.includes(discountValue);
+
+            const isRatingMatched = 
+                selectedRating === null || 
+                Math.floor(item.rating) === selectedRating;
 
             return isWithinDateRange && isDiscountMatched && isRatingMatched;
         });
 
+        console.log("Filtered Data:", filtered);
         onApply(filtered);
     };
 
     return (
-        <div className="p-6 bg-white rounded-lg shadow-lg w-full ">
+        <div className="p-6 bg-white rounded-lg shadow-lg w-full">
             <h2 className="text-lg font-bold mb-4">Filter Options</h2>
             
             <div className="mb-4">
-                <span className="block font-semibold mb-2">Date Range</span>
+                <span className="block font-semibold mb-2">Date Range (Optional)</span>
                 <DateRange
                     editableDateInputs={true}
                     onChange={item => setState([item.selection])}
@@ -64,10 +85,12 @@ export default function Filter({ onApply }: { onApply: (filteredData: Promo[]) =
                             <input
                                 type="checkbox"
                                 className="mr-2"
+                                checked={selectedDiscounts.includes(discount)}
                                 onChange={(e) => {
-                                    setSelectedDiscounts((prev) => e.target.checked
-                                        ? [...prev, discount]
-                                        : prev.filter((d) => d !== discount)
+                                    setSelectedDiscounts((prev) => 
+                                        e.target.checked
+                                            ? [...prev, discount]
+                                            : prev.filter((d) => d !== discount)
                                     );
                                 }}
                             /> {discount}%
@@ -78,17 +101,29 @@ export default function Filter({ onApply }: { onApply: (filteredData: Promo[]) =
             
             <div className="mb-4">
                 <span className="block font-semibold mb-2">Rating</span>
-                <div className="flex items-center gap-4">
-                    {[1, 2, 3, 4, 5].map((rating) => (
-                        <label key={rating} className="flex items-center">
-                            <input
-                                type="radio"
-                                name="rating"
-                                className="mr-2"
-                                onChange={() => setSelectedRating(rating)}
-                            /> {rating} Star{rating > 1 && 's'}
-                        </label>
-                    ))}
+                <div className="flex items-center gap-2">
+                    <div className="flex">
+                        {Array(5).fill(0).map((_, index) => {
+                            const starValue = index + 1;
+                            const isSelected = selectedRating !== null && starValue <= selectedRating;
+                            return (
+                                <button
+                                    key={index}
+                                    type="button"
+                                    onClick={() => setSelectedRating(starValue)}
+                                    className="focus:outline-none"
+                                >
+                                    <StarIcon
+                                        className={`w-5 h-5 ${
+                                            isSelected 
+                                                ? 'text-green-500 fill-current' 
+                                                : 'text-gray-300'
+                                        }`}
+                                    />
+                                </button>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
             
