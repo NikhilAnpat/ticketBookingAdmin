@@ -65,7 +65,7 @@ export default function Filter({ onApply }: { onApply: (filteredData: Promo[]) =
 
     return (
         <div className="p-6  rounded-lg w-full">
-            {/* <h2 className="text-lg font-bold mb-4">Filter Options</h2> */}
+            
             
             <div className="mb-4">
                 <span className="block font-semibold mb-2">Date Range</span>
