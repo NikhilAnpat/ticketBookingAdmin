@@ -103,13 +103,13 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
     const flightTypes = ["Domestic", "International"];
 
     return (
-        <div className="h-auto  rounded-lg">
+        <div className=" h-[500px] overflow-y-auto lg:h-auto  rounded-lg">
             <div className="bg-[#FEF3C7] mb-3 px-6 pt-3 flex justify-center items-center rounded-t-lg shadow-sm">
                 <h1 className="text-2xl font-semibold font-mono mb-4">{isEdit ? "Edit Deal" : "New Deal"}</h1>
             </div>
             <div className="grid px-6 py-3">
-                <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-                    <div className="grid grid-cols-2 gap-4">
+                <form onSubmit={handleSubmit} className="flex flex-col   gap-3">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <div className="flex flex-col">
                             <label htmlFor="title" className="text-gray-500 mb-1">Title</label>
                             <input
@@ -138,7 +138,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <div className="flex flex-col">
                             <label htmlFor="discount" className="text-gray-500 mb-1">Discount</label>
                             <input
@@ -167,8 +167,9 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                                     required
                                 />
                                 {showDatePicker && (
-                                    <div className="absolute z-10 mt-1 bg-white shadow-lg rounded-lg">
+                                    <div className="absolute z-1 xl:left-0 lg:-left-[100px] -left-[10px] mt-1 bg-white shadow-lg rounded-lg">
                                         <DateRange
+                                        className=""
                                             editableDateInputs={true}
                                             onChange={handleDateRangeChange}
                                             moveRangeOnFirstSelection={false}
@@ -189,7 +190,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <div className="flex flex-col">
                             <label htmlFor="image" className="text-gray-500 mb-1">Image</label>
                             <input
@@ -216,7 +217,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <div className="flex flex-col">
                             <label htmlFor="origin" className="text-gray-500 mb-1">Origin</label>
                             <input
@@ -245,7 +246,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <div className="flex flex-col">
                             <label className="text-gray-500 mb-1">Rating</label>
                             <div className="p-2 rounded-3xl flex items-center">

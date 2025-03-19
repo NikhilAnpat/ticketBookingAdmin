@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import flightdeals from '../dummyData/deals/Deals';
-import { StarIcon } from "lucide-react";
+import { StarIcon, FilterIcon } from "lucide-react";
 import Filter from "../modal/Filter";
 import AddDeals from "../modal/AddDeals";
 
@@ -18,14 +18,17 @@ interface Promo {
     Type: string;
     Fname: string;
 }
+interface DealsProps {
+    searchQuery: string;
+}
 
 const PromoCard: React.FC<Promo & { onDelete: (id: number) => void; onEdit: (deal: Promo) => void }> = ({
     id, title, description, discount, promoPeriod, image, price, rating, destination, origin, Type, Fname, onDelete, onEdit,
 }) => (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden w-[90%] lg:w-[45%] xl:w-[30%]">
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden w-[100%] lg:w-[45%] xl:w-[32%]">
         <img src={image} alt={title} className="w-full h-48 object-cover" />
         <div className="p-4">
-            <div className="flex flex-col justify-start items-start h-[180px]">
+            <div className="flex flex-col justify-start items-start h-auto">
                 <div className="flex justify-between w-[100%]">
                     <h3 className="text-lg font-bold text-gray-800">{title}</h3>
                     <div className="flex items-center mt-2">
@@ -68,11 +71,24 @@ const PromoCard: React.FC<Promo & { onDelete: (id: number) => void; onEdit: (dea
         </div>
     </div>
 );
-const Deals: React.FC = () => {
+const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
     const [sortedDeals, setSortedDeals] = useState<Promo[]>(flightdeals.map(deal => ({ ...deal, price: parseFloat(deal.price) })));
     const [showFilter, setShowFilter] = useState(false);
     const [showAddDeal, setShowAddDeal] = useState(false);
     const [dealToEdit, setDealToEdit] = useState<Promo | null>(null);
+
+    useEffect(() => {
+        const filteredDeals = flightdeals
+            .map(deal => ({ ...deal, price: parseFloat(deal.price) }))
+            .filter(deal => {
+                const query = searchQuery.toLowerCase().trim();
+                return (
+                    deal.destination.toLowerCase().includes(query) ||
+                    deal.origin.toLowerCase().includes(query)
+                );
+            });
+        setSortedDeals(filteredDeals);
+    }, [searchQuery]);
 
     const handleSort = (order: string) => {
         const sorted = [...sortedDeals].sort((a, b) =>
@@ -119,23 +135,24 @@ const Deals: React.FC = () => {
         } else {
             document.body.style.overflow = "auto";
         }
-        // Cleanup on unmount
         return () => {
             document.body.style.overflow = "auto";
         };
     }, [showAddDeal, showFilter]);
-
     return (
-        <div className="p-6 w-[100%] ">
-            <div className="flex px-[40px] justify-between mb-4">
-                <button className="bg-gray-200 px-4 py-2 rounded" onClick={() => setShowFilter(true)}>
-                    Filter
+        <div className="p-5 w-[100%] ">
+            <div className="flex md:px-[20px] px-[5px]  md:justify-between mb-4">
+                <button className="bg-gray-200 px-4 mr-4 py-2 rounded" onClick={() => setShowFilter(true)}>
+                    <FilterIcon></FilterIcon>
                 </button>
-                <select className="bg-gray-200 px-4 py-2 rounded" onChange={(e) => handleSort(e.target.value)}>
-                    <option value="">Sort by Price</option>
+                {/* <select className="bg-gray-200 px-2 py-2 mr-4 rounded" onChange={(e) => handleSort(e.target.value)}>
+                    <option  value="">Price ↑ ↓ </option>
                     <option value="low-to-high">Low to High</option>
                     <option value="high-to-low">High to Low</option>
-                </select>
+                </select> */}
+                <div className="bg-gray-200 px-2 py-2 mr-4 rounded" >
+                    <span>Price <span className="text-[20px]" >↑ ↓</span> </span>
+                </div>
                 <button className="bg-yellow-500 text-white px-2 py-2 rounded" onClick={() => { setDealToEdit(null); setShowAddDeal(true); }}>
                     + Add Promo
                 </button>
@@ -154,17 +171,28 @@ const Deals: React.FC = () => {
             {showFilter && (
                 <div
                     className="fixed inset-0 bg-black bg-opacity-50 z-[999] flex justify-center items-center"
-                    onClick={() => setShowFilter(false)} // Close filter on outside click
+                    onClick={() => setShowFilter(false)}
                 >
                     <div
-                        className="bg-white p-6 flex items-start overflow-hidden  rounded-lg shadow-lg h-[500px] overflow-y-auto w-[30%]"
-                        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+                        className="bg-white p-3 flex items-start overflow-hidden  rounded-lg shadow-lg h-[500px] overflow-y-auto w-[80%] md:w-[25%]"
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        <Filter onApply={handleApplyFilter} />
+                        <div>
+                            <div className="flex justify-around items-center">
+                            <h2 className="text-lg font-bold mb-4">Filter Options</h2>
+                            <button className="mt-3  text-black text-xl font-bold w-8 h-8 flex items-center justify-center rounded-xl hover:bg-gray-200" onClick={() => setShowFilter(false)}>
+                                X
+                            </button>
 
-                        <button className= "mt-3  text-black text-xl font-bold w-8 h-8 flex items-center justify-center rounded-xl hover:bg-gray-200" onClick={() => setShowFilter(false)}>
-                            X
-                        </button>
+                            </div>
+                            <div>
+                                <Filter onApply={handleApplyFilter} />
+
+                            </div>
+
+                        </div>
+
+
                     </div>
                 </div>
             )}
@@ -175,8 +203,8 @@ const Deals: React.FC = () => {
                     onClick={closeModal} // Close modal on outside click
                 >
                     <div
-                        className="bg-gray-100 rounded-lg w-[40%] relative"
-                        onClick={(e) => e.stopPropagation()} 
+                        className="bg-gray-100 rounded-lg w-[80%] md:w-[40%] relative"
+                        onClick={(e) => e.stopPropagation()}
                     >
                         <button
                             className="absolute top-2 right-2 text-black text-xl font-bold w-8 h-8 flex items-center justify-center rounded-xl hover:bg-gray-200"

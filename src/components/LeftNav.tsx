@@ -1,43 +1,36 @@
 import React, { useEffect, useRef } from 'react';
+import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, Ticket, Calendar, CreditCard, MessageSquare, Plane, Percent } from 'lucide-react';
 
 interface NavItemProps {
   icon: React.ElementType;
   text: string;
-  active?: boolean;
+  to: string;
   onClick: () => void;
 }
 
-const NavItem = ({ icon: Icon, text, active = false, onClick }: NavItemProps) => (
-  <div
-    className={`flex items-center space-x-3 px-4 py-3 rounded-lg cursor-pointer ${active ? 'bg-amber-100 text-amber-900' : 'hover:bg-gray-100'
-      }`}
+const NavItem = ({ icon: Icon, text, to, onClick }: NavItemProps) => (
+  <NavLink
+    to={to}
+    className={({ isActive }) =>
+      `flex items-center space-x-3 px-4 py-3 rounded-lg cursor-pointer transition 
+       ${isActive ? 'bg-amber-100 text-amber-900' : 'hover:bg-gray-100'}`
+    }
     onClick={onClick}
   >
     <Icon className="w-5 h-5" />
     <span className="font-medium">{text}</span>
-  </div>
+  </NavLink>
 );
 
 interface LeftNavProps {
-  currentPage: string;
-  onPageChange: (page: string) => void;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-export default function LeftNav({ currentPage, onPageChange, isOpen, setIsOpen }: LeftNavProps) {
+export default function LeftNav({ isOpen, setIsOpen }: LeftNavProps) {
   const sidebarRef = useRef<HTMLDivElement>(null);
 
-  // Function to handle page change and close sidebar on mobile
-  const handlePageChange = (page: string) => {
-    onPageChange(page);
-    if (window.innerWidth < 768) {
-      setIsOpen(false);
-    }
-  };
-
-  
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node) && window.innerWidth < 768) {
@@ -54,79 +47,38 @@ export default function LeftNav({ currentPage, onPageChange, isOpen, setIsOpen }
   return (
     <>
       {/* Sidebar */}
-      <div 
+      <div
         ref={sidebarRef}
-        className={`fixed md:h-screen h-full w-[270px] md:w-[210px]  bg-white p-4 border-r transition-all duration-300 z-[999] 
-                  ${isOpen ? 'translate-x-0 overflow-y-auto ' : 'hidden md:block'}`}
+        className={`fixed md:h-screen h-full w-[270px] md:w-[210px] bg-white p-4 border-r transition-all duration-300 z-[999]
+                    ${isOpen ? 'translate-x-0 overflow-y-auto' : 'hidden md:block'}`}
       >
         <div>
-          {/* Logo section */}
-          <div 
+          {/* Logo */}
+          <div
             className="flex items-center space-x-2 px-4 mb-8 cursor-pointer"
-            onClick={() => {
-              if (window.innerWidth < 768) {
-                setIsOpen(false);
-              }
-            }}
+            onClick={() => setIsOpen(false)}
           >
             <Plane className="w-8 h-8 text-amber-500 transform -rotate-45" />
             <span className="text-2xl font-bold">Skytix</span>
             <span className="px-2 py-1 bg-amber-100 text-amber-700 text-xs rounded-full">v1.0</span>
           </div>
 
-          <div className="overflow-y-auto ">
-            <NavItem
-              icon={LayoutDashboard}
-              text="Dashboard"
-              active={currentPage === 'dashboard'}
-              onClick={() => handlePageChange('dashboard')}
-            />
-            <NavItem
-              icon={Ticket}
-              text="Bookings"
-              active={currentPage === 'bookings'}
-              onClick={() => handlePageChange('bookings')}
-            />
-            <NavItem
-              icon={Calendar}
-              text="Schedule"
-              active={currentPage === 'schedule'}
-              onClick={() => handlePageChange('schedule')}
-            />
-            <NavItem
-              icon={CreditCard}
-              text="Payments"
-              active={currentPage === 'payments'}
-              onClick={() => handlePageChange('payments')}
-            />
-            <NavItem
-              icon={MessageSquare}
-              text="Messages"
-              active={currentPage === 'messages'}
-              onClick={() => handlePageChange('messages')}
-            />
-            <NavItem
-              icon={Plane}
-              text="Flight Tracking"
-              active={currentPage === 'flight-tracking'}
-              onClick={() => handlePageChange('flight-tracking')}
-            />
-            <NavItem
-              icon={Percent}
-              text="Deals"
-              active={currentPage === 'deals'}
-              onClick={() => handlePageChange('deals')}
-            />
+          {/* Navigation */}
+          <div className="overflow-y-auto">
+            <NavItem icon={LayoutDashboard} text="Dashboard" to="/" onClick={() => setIsOpen(false)} />
+            <NavItem icon={Ticket} text="Bookings" to="/bookings" onClick={() => setIsOpen(false)} />
+            <NavItem icon={Calendar} text="Schedule" to="/schedule" onClick={() => setIsOpen(false)} />
+            <NavItem icon={CreditCard} text="Payments" to="/payments" onClick={() => setIsOpen(false)} />
+            <NavItem icon={MessageSquare} text="Messages" to="/messages" onClick={() => setIsOpen(false)} />
+            <NavItem icon={Plane} text="Flight Tracking" to="/flight-tracking" onClick={() => setIsOpen(false)} />
+            <NavItem icon={Percent} text="Deals" to="/deals" onClick={() => setIsOpen(false)} />
           </div>
         </div>
       </div>
-      
-      {/* Overlay for mobile - only visible when sidebar is open */}
+
+      {/* Mobile Overlay */}
       {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/20 md:hidden z-0"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="fixed inset-0 bg-black/20 md:hidden z-0" onClick={() => setIsOpen(false)} />
       )}
     </>
   );
