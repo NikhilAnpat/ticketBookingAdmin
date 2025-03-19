@@ -104,7 +104,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
 
     return (
         <div className=" h-[500px] overflow-y-auto lg:h-auto  rounded-lg">
-            <div className="bg-[#FEF3C7] mb-3 px-6 pt-3 flex justify-center items-center rounded-t-lg shadow-sm">
+            <div className="bg-[#EAB308] mb-3 px-6 pt-3 flex justify-center items-center rounded-t-lg shadow-sm">
                 <h1 className="text-2xl font-semibold font-mono mb-4">{isEdit ? "Edit Deal" : "New Deal"}</h1>
             </div>
             <div className="grid px-6 py-3">
@@ -197,7 +197,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                                 type="file"
                                 id="image"
                                 name="image"
-                                className="border p-2 rounded-xl cursor-pointer file:cursor-pointer file:rounded-lg file:bg-[#FEF3C7] bg-white file:shadow-md"
+                                className=" p-2 rounded-xl cursor-pointer file:cursor-pointer file:border-0 file:rounded-lg file:bg-[#EAB308] bg-white file:shadow-md"
                                 onChange={handleChange}
                                 required={!isEdit}
                             />
@@ -266,7 +266,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                             <label className="text-gray-500 mb-1">Flight Type</label>
                             <div className="flex gap-4 p-2 rounded-3xl">
                                 {flightTypes.map((type) => (
-                                    <label key={type} className="flex items-center gap-2 cursor-pointer">
+                                    <label key={type} className="flex items-center text-gray-500 gap-2 cursor-pointer">
                                         <input
                                             type="radio"
                                             name="Type"
@@ -299,7 +299,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                     <div className="flex justify-center">
                         <button
                             type="submit"
-                            className="bg-[#FEF3C7] text-black font-medium w-[30%] py-2 rounded-lg hover:bg-[#f7eab4]"
+                            className="bg-[#EAB308] text-black font-medium w-[30%] py-2 rounded-lg hover:bg-[#fedb73]"
                         >
                             {isEdit ? "Update Deal" : "Add Deal"}
                         </button>

@@ -71,49 +71,73 @@ const PromoCard: React.FC<Promo & { onDelete: (id: number) => void; onEdit: (dea
         </div>
     </div>
 );
+
 const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
     const [sortedDeals, setSortedDeals] = useState<Promo[]>(flightdeals.map(deal => ({ ...deal, price: parseFloat(deal.price) })));
+    const [filteredDeals, setFilteredDeals] = useState<Promo[]>([]);
     const [showFilter, setShowFilter] = useState(false);
     const [showAddDeal, setShowAddDeal] = useState(false);
     const [dealToEdit, setDealToEdit] = useState<Promo | null>(null);
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState('Price');
 
+    // Initial load and search filtering
     useEffect(() => {
-        const filteredDeals = flightdeals
+        const filtered = flightdeals
             .map(deal => ({ ...deal, price: parseFloat(deal.price) }))
             .filter(deal => {
                 const query = searchQuery.toLowerCase().trim();
-                return (
+                return query === '' || 
                     deal.destination.toLowerCase().includes(query) ||
-                    deal.origin.toLowerCase().includes(query)
-                );
+                    deal.origin.toLowerCase().includes(query);
             });
-        setSortedDeals(filteredDeals);
+        setFilteredDeals(filtered);
+        
+        // Apply current sort to the new filtered results
+        if (selectedOption === 'Low to High') {
+            setSortedDeals([...filtered].sort((a, b) => a.price - b.price));
+        } else if (selectedOption === 'High to Low') {
+            setSortedDeals([...filtered].sort((a, b) => b.price - a.price));
+        } else {
+            setSortedDeals(filtered);
+        }
     }, [searchQuery]);
 
-    const handleSort = (order: string) => {
-        const sorted = [...sortedDeals].sort((a, b) =>
-            order === "low-to-high" ? a.price - b.price : b.price - a.price
-        );
-        setSortedDeals(sorted);
-    };
-
     const handleApplyFilter = (filteredData: Promo[]) => {
-        setSortedDeals(filteredData);
+        setFilteredDeals(filteredData);
+        
+        // Apply current sort to the newly filtered data
+        if (selectedOption === 'Low to High') {
+            setSortedDeals([...filteredData].sort((a, b) => a.price - b.price));
+        } else if (selectedOption === 'High to Low') {
+            setSortedDeals([...filteredData].sort((a, b) => b.price - a.price));
+        } else {
+            setSortedDeals(filteredData);
+        }
+        
         setShowFilter(false);
     };
 
     const handleDelete = (id: number) => {
-        setSortedDeals((prevDeals) => prevDeals.filter((deal) => deal.id !== id));
+        const updatedDeals = sortedDeals.filter(deal => deal.id !== id);
+        setSortedDeals(updatedDeals);
+        setFilteredDeals(prevDeals => prevDeals.filter(deal => deal.id !== id));
     };
 
     const handleAddDeal = (newDeal: Promo) => {
-        setSortedDeals((prevDeals) => [newDeal, ...prevDeals]);
+        const updatedDeals = [newDeal, ...sortedDeals];
+        setSortedDeals(updatedDeals);
+        setFilteredDeals(prevDeals => [newDeal, ...prevDeals]);
         setShowAddDeal(false);
     };
 
     const handleEditDeal = (updatedDeal: Promo) => {
-        setSortedDeals((prevDeals) =>
-            prevDeals.map((deal) => (deal.id === updatedDeal.id ? updatedDeal : deal))
+        const updatedDeals = sortedDeals.map(deal => 
+            deal.id === updatedDeal.id ? updatedDeal : deal
+        );
+        setSortedDeals(updatedDeals);
+        setFilteredDeals(prevDeals => 
+            prevDeals.map(deal => deal.id === updatedDeal.id ? updatedDeal : deal)
         );
         setDealToEdit(null);
         setShowAddDeal(false);
@@ -129,6 +153,25 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
         setDealToEdit(null);
     };
 
+    const toggleDropdown = () => setIsOpen(!isOpen);
+
+    const handleOptionClick = (option) => {
+        setSelectedOption(option.label === 'Reset' ? 'Price' : option.label);
+        setIsOpen(false);
+        
+        
+        if (option.value === 'asc') {
+            
+            setSortedDeals([...filteredDeals].sort((a, b) => a.price - b.price));
+        } else if (option.value === 'desc') {
+            
+            setSortedDeals([...filteredDeals].sort((a, b) => b.price - a.price));
+        } else if (option.value === 'reset') {
+            
+            setSortedDeals([...filteredDeals]);
+        }
+    };
+
     useEffect(() => {
         if (showAddDeal || showFilter) {
             document.body.style.overflow = "hidden";
@@ -139,21 +182,47 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
             document.body.style.overflow = "auto";
         };
     }, [showAddDeal, showFilter]);
+
+    const options = [
+        { label: 'Low to High', value: 'asc' },
+        { label: 'High to Low', value: 'desc' },
+        { label: 'Reset', value: 'reset' }
+    ];
+
     return (
         <div className="p-5 w-[100%] ">
-            <div className="flex md:px-[20px] px-[5px]  md:justify-between mb-4">
-                <button className="bg-gray-200 px-4 mr-4 py-2 rounded" onClick={() => setShowFilter(true)}>
-                    <FilterIcon></FilterIcon>
+            <div className="flex md:px-[20px] px-[5px] justify-end mb-4">
+                <button className="bg-gray-200 px-2 mr-2 md:mr-4 md:py-2 rounded" onClick={() => setShowFilter(true)}>
+                    <FilterIcon  />
                 </button>
-                {/* <select className="bg-gray-200 px-2 py-2 mr-4 rounded" onChange={(e) => handleSort(e.target.value)}>
-                    <option  value="">Price ↑ ↓ </option>
-                    <option value="low-to-high">Low to High</option>
-                    <option value="high-to-low">High to Low</option>
-                </select> */}
-                <div className="bg-gray-200 px-2 py-2 mr-4 rounded" >
-                    <span>Price <span className="text-[20px]" >↑ ↓</span> </span>
+                <div className="relative">
+                    <button
+                        type="button"
+                        className="bg-gray-200 px-3 md:py-2 rounded flex items-center mr-4"
+                        onClick={toggleDropdown}
+                    >
+                        <span>{selectedOption}</span>
+                        <span className="text-lg ml-2">
+                             ↑ ↓
+                        </span>
+                    </button>
+                    {isOpen && (
+                        <div className="absolute mt-1 w-[120px] rounded-md bg-white shadow-lg z-10">
+                            <div className="py-1">
+                                {options.map((option) => (
+                                    <button
+                                        key={option.value}
+                                        onClick={() => handleOptionClick(option)}
+                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                                    >
+                                        {option.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
-                <button className="bg-yellow-500 text-white px-2 py-2 rounded" onClick={() => { setDealToEdit(null); setShowAddDeal(true); }}>
+                <button className="bg-yellow-500 text-white px-2 md:py-2 rounded" onClick={() => { setDealToEdit(null); setShowAddDeal(true); }}>
                     + Add Promo
                 </button>
             </div>
@@ -164,7 +233,7 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
                         <PromoCard key={promo.id} {...promo} onDelete={handleDelete} onEdit={openEditModal} />
                     ))
                 ) : (
-                    <p className="text-gray-500"></p>
+                    <p className="text-gray-500">No deals found</p>
                 )}
             </div>
 
@@ -174,40 +243,35 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
                     onClick={() => setShowFilter(false)}
                 >
                     <div
-                        className="bg-white p-3 flex items-start overflow-hidden  rounded-lg shadow-lg h-[500px] overflow-y-auto w-[80%] md:w-[25%]"
+                        className="bg-white p-3 flex items-start overflow-hidden rounded-lg shadow-lg h-[500px] overflow-y-auto w-[80%] sm:w-[60%] md:w-[42%] lg:w-[32%] xl:w-[22%]"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div>
-                            <div className="flex justify-around items-center">
-                            <h2 className="text-lg font-bold mb-4">Filter Options</h2>
-                            <button className="mt-3  text-black text-xl font-bold w-8 h-8 flex items-center justify-center rounded-xl hover:bg-gray-200" onClick={() => setShowFilter(false)}>
-                                X
-                            </button>
-
+                            <div className="flex justify-around items-center gap-4">
+                                <h2 className="text-lg font-bold">Filter Options</h2>
+                                <button className="text-black text-xl font-bold w-8 h-8 flex items-center justify-center rounded-xl hover:bg-gray-200" onClick={() => setShowFilter(false)}>
+                                    X
+                                </button>
                             </div>
                             <div>
                                 <Filter onApply={handleApplyFilter} />
-
                             </div>
-
                         </div>
-
-
                     </div>
                 </div>
             )}
 
             {showAddDeal && (
                 <div
-                    className="fixed inset-0 bg-black z-[999] bg-opacity-50  flex justify-center items-center"
-                    onClick={closeModal} // Close modal on outside click
+                    className="fixed inset-0 bg-black z-[999] bg-opacity-50 flex justify-center items-center"
+                    onClick={closeModal}
                 >
                     <div
                         className="bg-gray-100 rounded-lg w-[80%] md:w-[40%] relative"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <button
-                            className="absolute top-2 right-2 text-black text-xl font-bold w-8 h-8 flex items-center justify-center rounded-xl hover:bg-gray-200"
+                            className="absolute top-2 right-2 text-black text-xl font-bold w-8 h-8 flex items-center justify-center rounded-xl"
                             onClick={closeModal}
                         >
                             X

@@ -154,9 +154,7 @@ export default function Dashboard() {
   ];
 
   const typedWidgetsData = widgetsData as WidgetItem[];
-  // const isValidIcon = (icon: string): icon is WidgetItem['icon'] => {
-  //   return ['Plane', 'Ship', 'X', 'DollarSign'].includes(icon);
-  // };
+
 
 
   return (
@@ -166,9 +164,9 @@ export default function Dashboard() {
           {typedWidgetsData.map((item, index) => (
             <StatCard
               key={index}
-              icon={iconMap[item.icon]} 
+              icon={iconMap[item.icon]}
               title={item.title}
-              value={item.numb.toString()} // Convert number to string
+              value={item.numb.toString()}
               change={`${item.hike.sign === 'up' ? '↑' : '↓'} ${item.hike.per}`}
               changeType={item.hike.sign}
             />
@@ -182,16 +180,13 @@ export default function Dashboard() {
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={toggleDropdown}
-                  className={`flex cursor-pointer items-center gap-2 text-[14px] border rounded-lg px-2 py-2 bg-[#E4C779] shadow-md text-gray-700 ${range[0].startDate && range[0].endDate && range[0].startDate.toDateString() !== range[0].endDate.toDateString()
-                    ? 'w-[200px]'
-                    : 'w-auto'
-                    }`}
+                  className="flex cursor-pointer items-center gap-2 text-[14px] border rounded-lg px-2 py-2 bg-[#E4C779] shadow-md text-gray-700"
                 >
                   <Calendar size={24} />
                   {range[0].startDate && range[0].endDate ? (
                     range[0].startDate.toDateString() === range[0].endDate.toDateString()
-                      ? range[0].startDate.toLocaleDateString('en-GB')
-                      : `${range[0].startDate.toLocaleDateString('en-GB')} - ${range[0].endDate.toLocaleDateString('en-GB')}`
+                      ? new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(range[0].startDate)
+                      : `${range[0].startDate.getDate()}-${range[0].endDate.getDate()} ${range[0].endDate.toLocaleString('en-GB', { month: 'long' })} ${range[0].endDate.getFullYear()}`
                   ) : 'Select Date'}
                 </button>
                 {isOpen && (
