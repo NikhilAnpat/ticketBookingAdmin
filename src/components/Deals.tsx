@@ -190,7 +190,7 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
     ];
 
     return (
-        <div className="p-5 w-[100%] ">
+        <div className="p-5 w-[100%] h-[calc(100%-64px)]">
             <div className="flex md:px-[20px] px-[5px] justify-end mb-4">
                 <button className="bg-gray-200 px-2 mr-2 md:mr-4 md:py-2 rounded" onClick={() => setShowFilter(true)}>
                     <FilterIcon  />

@@ -20,18 +20,20 @@ function App() {
 
   return (
     <Router>
-      <div className="flex h-[100%] w-[100%] bg-gray-50">
+      <div className="flex h-[100vh] w-[100%] bg-gray-50">
         {/* Sidebar */}
         <div className="h-[100%] sticky top-0 left-0 z-[999] md:h-full md:w-[220px]">
           <LeftNav isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
         </div>
 
         {/* Main Content */}
-        <div className="flex flex-col bg-gray-50 w-[100%] overflow-hidden md:w-[calc(100%-220px)]" style={{ height: "100%" }}>
+        <div className="flex flex-col bg-gray-50 w-[100%] overflow-y-auto md:w-[calc(100%-220px)]" style={{ height: "100%" }}>
+          
           <Header toggleSidebar={toggleSidebar} onSearch={setSearchQuery} />
+          
 
           {/* Routes */}
-          <Routes>
+          <Routes >
             <Route path="/" element={<Dashboard  />} />
             <Route path="/dashboard" element={<Navigate to="/" replace={true} />} />
             <Route path="/bookings" element={<Bookings  />} />
