@@ -158,7 +158,7 @@ export default function Dashboard() {
 
 
   return (
-    <div className='flex overflow-y-auto flex-col xl:flex-row h-[calc(100%-64px)]'>
+    <div className='flex overflow-y-auto flex-col xl:flex-row h-[calc(100%-60px)]'>
       <div className="Left_part w-[100%] md:w-[100%] lg:w-[100%] xl:w-[75%] py-6 px-3 flex-1">
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
           {typedWidgetsData.map((item, index) => (
