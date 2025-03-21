@@ -3,14 +3,11 @@ import { StarIcon } from "lucide-react";
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import { RangeKeyDict } from 'react-date-range';
 import { addDays } from 'date-fns';
+import {AddDealsProps} from "../interfaces/addDealsModal";
 
-interface AddDealsProps {
-    onAddDeal?: (newDeal: any) => void;
-    onEditDeal?: (updatedDeal: any) => void; // New prop for editing
-    dealToEdit?: any; // The deal to edit, if in edit mode
-    isEdit?: boolean; // Flag to determine add or edit mode
-}
+
 
 const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, isEdit = false }) => {
     const [formData, setFormData] = useState({
@@ -40,7 +37,11 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
 
     useEffect(() => {
         if (isEdit && dealToEdit) {
-            setFormData(dealToEdit);
+            setFormData({
+                ...dealToEdit,
+                price: dealToEdit.price.toString(),
+                rating: dealToEdit.rating.toString(),
+            });
             setSelectedStars(dealToEdit.rating);
             const [startDateStr, endDateStr] = dealToEdit.promoPeriod.split(" - ");
             setDateRange([{
@@ -67,10 +68,14 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
         }));
     };
 
-    const handleDateRangeChange = (item: any) => {
-        setDateRange([item.selection]);
-        const startDateStr = item.selection.startDate.toLocaleDateString();
-        const endDateStr = item.selection.endDate.toLocaleDateString();
+    const handleDateRangeChange = (item: RangeKeyDict) => {
+        setDateRange([{
+            startDate: item.selection.startDate || new Date(),
+            endDate: item.selection.endDate || new Date(),
+            key: item.selection.key || 'selection'
+        }]);
+        const startDateStr = (item.selection.startDate ?? new Date()).toLocaleDateString();
+        const endDateStr = (item.selection.endDate ?? new Date()).toLocaleDateString();
         const promoPeriod = `${startDateStr} - ${endDateStr}`;
 
         setFormData((prevData) => ({
@@ -85,7 +90,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
         const formattedData = {
             ...formData,
             price: parseFloat(formData.price),
-            rating: parseFloat(formData.rating || "0"),
+            rating: parseFloat(String(formData.rating || "0")),
         };
 
         console.log(isEdit ? "Edited Deal:" : "New Deal:", formattedData);

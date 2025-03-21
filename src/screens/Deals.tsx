@@ -1,26 +1,11 @@
 import React, { useState, useEffect } from "react";
-import flightdeals from '../dummyData/deals/Deals';
+import flightdeals from '../components/dummyData/deals/Deals';
 import { StarIcon, FilterIcon } from "lucide-react";
-import Filter from "../modal/Filter";
-import AddDeals from "../modal/AddDeals";
+import Filter from "../components/modal/Filter";
+import AddDeals from "../components/modal/AddDeals";
+import {DealsProps, OptionClickHandler, Promo} from "../components/interfaces/dealsInterface";
 
-interface Promo {
-    id: number;
-    title: string;
-    description: string;
-    discount: string;
-    promoPeriod: string;
-    image: string;
-    price: number;
-    rating: number;
-    destination: string;
-    origin: string;
-    Type: string;
-    Fname: string;
-}
-interface DealsProps {
-    searchQuery: string;
-}
+
 
 const PromoCard: React.FC<Promo & { onDelete: (id: number) => void; onEdit: (deal: Promo) => void }> = ({
     id, title, description, discount, promoPeriod, image, price, rating, destination, origin, Type, Fname, onDelete, onEdit,
@@ -101,7 +86,7 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
         } else {
             setSortedDeals(filtered);
         }
-    }, [searchQuery]);
+    }, [searchQuery, selectedOption]);
 
     const handleApplyFilter = (filteredData: Promo[]) => {
         setFilteredDeals(filteredData);
@@ -155,19 +140,17 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
 
     const toggleDropdown = () => setIsOpen(!isOpen);
 
-    const handleOptionClick = (option) => {
+    
+
+    const handleOptionClick = (option: OptionClickHandler): void => {
         setSelectedOption(option.label === 'Reset' ? 'Price' : option.label);
         setIsOpen(false);
         
-        
         if (option.value === 'asc') {
-            
             setSortedDeals([...filteredDeals].sort((a, b) => a.price - b.price));
         } else if (option.value === 'desc') {
-            
             setSortedDeals([...filteredDeals].sort((a, b) => b.price - a.price));
         } else if (option.value === 'reset') {
-            
             setSortedDeals([...filteredDeals]);
         }
     };
@@ -279,7 +262,7 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
                         <AddDeals
                             onAddDeal={dealToEdit ? undefined : handleAddDeal}
                             onEditDeal={dealToEdit ? handleEditDeal : undefined}
-                            dealToEdit={dealToEdit}
+                            dealToEdit={dealToEdit || undefined}
                             isEdit={!!dealToEdit}
                         />
                     </div>

@@ -1,66 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Plane, Ship, X, DollarSign, Calendar, User } from 'lucide-react';
+import {  Calendar, User } from 'lucide-react';
 import { HiDotsHorizontal } from "react-icons/hi";
-import widgetsData from '../dummyData/dashboard/widgets.json';
-import progressData from '../dummyData/dashboard/progressBar.json';
-import bookingData from '../dummyData/dashboard/booking.json';
-import routesData from '../dummyData/dashboard/popularRoutes.json';
-import TicketSalesChart from './chart/TicketSalesChart';
+import widgetsData from '../components/dummyData/dashboard/widgets.json';
+import progressData from '../components/dummyData/dashboard/progressBar.json';
+import bookingData from '../components/dummyData/dashboard/booking.json';
+import routesData from '../components/dummyData/dashboard/popularRoutes.json';
+import TicketSalesChart from '../components/chart/TicketSalesChart';
 import { DateRange, RangeKeyDict, Range } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import FlightScheduleChart from './chart/FlightScheduleChart';
+import FlightScheduleChart from '../components/chart/FlightScheduleChart';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import PopularAirline from './chart/PopularAirline';
-
-// Define interfaces for props
-interface StatCardProps {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  value: string;
-  change: string;
-  changeType: 'up' | 'down';
-}
-
-interface FlightRouteProgressProps {
-  route: string;
-  km: number;
-  passengers: number;
-  maxPassengers: number;
-}
-
-interface Airline {
-  color: string;
-  name: string;
-  per: number;
-}
-
-interface Hike {
-  sign: 'up' | 'down';
-  per: string;
-}
-
-interface WidgetItem {
-  title: string;
-  icon: 'Plane' | 'Ship' | 'X' | 'DollarSign';
-  numb: number;
-  hike: Hike;
-}
-
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Plane,
-  Ship,
-  X,
-  DollarSign,
-};
+import PopularAirline from '../components/chart/PopularAirline';
+import {Airline, Country, FlightRouteProgressProps,  StatCardProps,WidgetItem,  iconMap} from '../components/interfaces/dashboardInterface'
 
 
-interface Country {
-  name: string;
-  progress: number;
-  color: string;
-}
 
 // StatCard Component
 const StatCard: React.FC<StatCardProps> = ({ icon: Icon, title, value, change, changeType }) => (

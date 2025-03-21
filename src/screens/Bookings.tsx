@@ -3,36 +3,10 @@ import { Filter, Clock, Plus, Calendar } from 'lucide-react';
 import { DateRange, RangeKeyDict, Range } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import bookingdata from '../dummyData/booking/FlightBookingData.json';
+import bookingdata from '../components/dummyData/booking/FlightBookingData.json';
+import {BookingRowProps, Flight} from '../components/interfaces/bookinginterface'
 
-interface Person {
-  image: string;
-  name: string;
-}
 
-interface FlightRange {
-  time1: string;
-  loc1: string;
-  st: string;
-  ed: string;
-  duration: string;
-  time2: string;
-  loc2: string;
-}
-
-interface Flight {
-  logo: string;
-  flightName: string;
-  code: string;
-  range: FlightRange;
-  date: string;
-  people: Person[];
-  status: string;
-}
-
-interface BookingRowProps {
-  flight: Flight;
-}
 
 const BookingRow: React.FC<BookingRowProps> = ({ flight }) => {
   const getStatusStyles = (status: string): string => {

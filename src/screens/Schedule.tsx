@@ -1,32 +1,9 @@
 import React, { useState } from 'react';
-import { Search, ArrowLeft, ArrowRight, Filter } from 'lucide-react';
+import { Search,  ArrowRight, Filter } from 'lucide-react';
 import FlightDetail from './FlightDetail';
+import {Flight} from '../components/interfaces/sheuduleInterface'
 
-type Flight = {
-  id: string;
-  airline: {
-    name: string;
-    code: string;
-    logo?: string;
-  };
-  departure: {
-    time: string;
-    city: string;
-    airport: string;
-    code: string;
-  };
-  arrival: {
-    time: string;
-    city: string;
-    airport: string;
-    code: string;
-  };
-  duration: string;
-  price: number;
-  facilities: string[];
-  baggage: string;
-  meal: string;
-};
+
 
 const flights: Flight[] = [
   {

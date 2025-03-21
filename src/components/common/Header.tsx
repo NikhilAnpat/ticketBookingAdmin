@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Search, Bell, Settings, Menu, X } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import {HeaderProps} from '../interfaces/header'
 
-interface HeaderProps {
-  toggleSidebar?: () => void;
-  onSearch?: (query: string) => void;
-}
+
 
 export default function Header({ toggleSidebar, onSearch }: HeaderProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);

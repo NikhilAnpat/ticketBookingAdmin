@@ -1,24 +1,10 @@
 import React from 'react';
 import { Search, Paperclip, Send, MoreVertical, Link2, Image, Video } from 'lucide-react';
+import {ChatGroup} from '../components/interfaces/messageinterface'
 
-type Message = {
-  id: string;
-  sender: string;
-  role: string;
-  time: string;
-  content: string;
-  unread?: boolean;
-  online?: boolean;
-};
 
-type ChatGroup = {
-  id: string;
-  name: string;
-  role: string;
-  messages: Message[];
-  icon?: string;
-  color?: string;
-};
+
+
 
 const chatGroups: ChatGroup[] = [
   {

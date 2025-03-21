@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import LeftNav from "./components/LeftNav";
-import Header from "./components/Header";
-import Dashboard from "./components/Dashboard";
-import Bookings from "./components/Bookings";
-import FlightTracking from "./components/FlightTracking";
-import Messages from "./components/Messages";
-import Schedule from "./components/Schedule";
-import Deals from "./components/Deals";
+import LeftNav from "./components/common/LeftNav";
+import Header from "./components/common/Header";
+import Dashboard from "./screens/Dashboard";
+import Bookings from "./screens/Bookings";
+import FlightTracking from "./screens/FlightTracking";
+import Messages from "./screens/Messages";
+import Schedule from "./screens/Schedule";
+import Deals from "./screens/Deals";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);

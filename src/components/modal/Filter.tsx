@@ -4,16 +4,8 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import filterdata from '../dummyData/deals/Deals';
 import { StarIcon } from 'lucide-react';
+import { Promo } from '../interfaces/dealsInterface';
 
-interface Promo {
-    title: string;
-    description: string;
-    discount: string;
-    promoPeriod: string;
-    image: string;
-    price: string;
-    rating: number;
-}
 
 export default function Filter({ onApply }: { onApply: (filteredData: Promo[]) => void }) {
     const [state, setState] = useState<Range[]>([
@@ -60,7 +52,7 @@ export default function Filter({ onApply }: { onApply: (filteredData: Promo[]) =
         });
 
         console.log("Filtered Data:", filtered);
-        onApply(filtered);
+        onApply(filtered.map(item => ({ ...item, price: parseFloat(item.price) })));
     };
 
     return (
