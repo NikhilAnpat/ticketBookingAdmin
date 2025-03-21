@@ -1,13 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, Ticket, Calendar, CreditCard, MessageSquare, Plane, Percent } from 'lucide-react';
-
-interface NavItemProps {
-  icon: React.ElementType;
-  text: string;
-  to: string;
-  onClick: () => void;
-}
+import { NavItemProps, LeftNavProps } from '../interfaces/leftNvaBar';
 
 const NavItem = ({ icon: Icon, text, to, onClick }: NavItemProps) => (
   <NavLink
@@ -23,10 +17,7 @@ const NavItem = ({ icon: Icon, text, to, onClick }: NavItemProps) => (
   </NavLink>
 );
 
-interface LeftNavProps {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-}
+
 
 export default function LeftNav({ isOpen, setIsOpen }: LeftNavProps) {
   const sidebarRef = useRef<HTMLDivElement>(null);
