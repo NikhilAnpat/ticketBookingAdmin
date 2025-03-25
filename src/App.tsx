@@ -1,6 +1,4 @@
 
-import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import React, { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import LeftNav from "./components/common/LeftNav";
