@@ -11,9 +11,9 @@ const PromoCard: React.FC<Promo & { onDelete: (id: number) => void; onEdit: (dea
     id, title, description, discount, promoPeriod, image, price, rating, destination, origin, Type, Fname, onDelete, onEdit,
 }) => (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden w-[100%] lg:w-[45%] xl:w-[32%]">
-        <img src={image} alt={title} className="w-full h-48 object-cover" />
+        <img src={image} alt={title} className="object-cover w-full h-48" />
         <div className="p-4">
-            <div className="flex flex-col justify-start items-start h-auto">
+            <div className="flex flex-col items-start justify-start h-auto">
                 <div className="flex justify-between w-[100%]">
                     <h3 className="text-lg font-bold text-gray-800">{title}</h3>
                     <div className="flex items-center mt-2">
@@ -22,20 +22,20 @@ const PromoCard: React.FC<Promo & { onDelete: (id: number) => void; onEdit: (dea
                         ))}
                     </div>
                 </div>
-                <p className="text-gray-600 mt-1">{description}</p>
+                <p className="mt-1 text-gray-600">{description}</p>
                 <p className="text-[14px] font-semibold text-red-500 mt-1">${price}</p>
-                <p className="text-yellow-600 font-semibold mt-1">{discount}</p>
-                <p className="text-sm text-gray-500 mt-1">Promo Period: {promoPeriod}</p>
+                <p className="mt-1 font-semibold text-yellow-600">{discount}</p>
+                <p className="mt-1 text-sm text-gray-500">Promo Period: {promoPeriod}</p>
                 <div className="flex flex-col w-[100%] gap-2">
-                    <div className="flex justify-between items-center">
-                        <p className="text-sm text-gray-700 mt-1">
+                    <div className="flex items-center justify-between">
+                        <p className="mt-1 text-sm text-gray-700">
                             <strong>Flight Name:</strong> {Fname}
                         </p>
                         <p className="text-sm text-gray-700">
                             <strong>Type: </strong> {Type}
                         </p>
                     </div>
-                    <div className="flex justify-between items-center">
+                    <div className="flex items-center justify-between">
                         <p className="text-sm text-gray-700">
                             <strong>Destination:</strong> {destination}
                         </p>
@@ -46,10 +46,10 @@ const PromoCard: React.FC<Promo & { onDelete: (id: number) => void; onEdit: (dea
                 </div>
             </div>
             <div className="flex justify-between mt-4">
-                <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded" onClick={() => onDelete(id)}>
+                <button className="px-4 py-2 text-gray-800 bg-gray-200 rounded" onClick={() => onDelete(id)}>
                     Delete
                 </button>
-                <button className="bg-yellow-500 text-white px-4 py-2 rounded" onClick={() => onEdit({ id, title, description, discount, promoPeriod, image, price, rating, destination, origin, Type, Fname })}>
+                <button className="px-4 py-2 text-white bg-yellow-500 rounded" onClick={() => onEdit({ id, title, description, discount, promoPeriod, image, price, rating, destination, origin, Type, Fname })}>
                     Edit
                 </button>
             </div>
@@ -175,17 +175,17 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
     return (
         <div className="p-5 w-[100%] h-[calc(100%-64px)]">
             <div className="flex md:px-[20px] px-[5px] justify-end mb-4">
-                <button className="bg-gray-200 px-2 mr-2 md:mr-4 md:py-2 rounded" onClick={() => setShowFilter(true)}>
+                <button className="px-2 mr-2 bg-gray-200 rounded md:mr-4 md:py-2" onClick={() => setShowFilter(true)}>
                     <FilterIcon  />
                 </button>
                 <div className="relative">
                     <button
                         type="button"
-                        className="bg-gray-200 px-3 md:py-2 rounded flex items-center mr-4"
+                        className="flex items-center px-3 mr-4 bg-gray-200 rounded md:py-2"
                         onClick={toggleDropdown}
                     >
                         <span>{selectedOption}</span>
-                        <span className="text-lg ml-2">
+                        <span className="ml-2 text-lg">
                              ↑ ↓
                         </span>
                     </button>
@@ -196,7 +196,7 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
                                     <button
                                         key={option.value}
                                         onClick={() => handleOptionClick(option)}
-                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
+                                        className="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                     >
                                         {option.label}
                                     </button>
@@ -205,7 +205,7 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
                         </div>
                     )}
                 </div>
-                <button className="bg-yellow-500 text-white px-2 md:py-2 rounded" onClick={() => { setDealToEdit(null); setShowAddDeal(true); }}>
+                <button className="px-2 text-white bg-yellow-500 rounded md:py-2" onClick={() => { setDealToEdit(null); setShowAddDeal(true); }}>
                     + Add Promo
                 </button>
             </div>
@@ -230,9 +230,9 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div>
-                            <div className="flex justify-around items-center gap-4">
+                            <div className="flex items-center justify-around gap-4">
                                 <h2 className="text-lg font-bold">Filter Options</h2>
-                                <button className="text-black text-xl font-bold w-8 h-8 flex items-center justify-center rounded-xl hover:bg-gray-200" onClick={() => setShowFilter(false)}>
+                                <button className="flex items-center justify-center w-8 h-8 text-xl font-bold text-black rounded-xl hover:bg-gray-200" onClick={() => setShowFilter(false)}>
                                     X
                                 </button>
                             </div>
@@ -254,7 +254,7 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <button
-                            className="absolute top-2 right-2 text-black text-xl font-bold w-8 h-8 flex items-center justify-center rounded-xl"
+                            className="absolute flex items-center justify-center w-8 h-8 text-xl font-bold text-black top-2 right-2 rounded-xl"
                             onClick={closeModal}
                         >
                             X
