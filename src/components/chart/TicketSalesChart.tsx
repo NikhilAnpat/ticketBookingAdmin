@@ -96,7 +96,7 @@ function TicketSalesChart() {
   };
   
   return (
-    <div className='w-[90%] sm:w-[90%] md:w-[100%] lg:w-[100%] xl:w-[100%]'>
+    <div className='w-[100%] '>
       <Chart 
         options={chartOptions} 
         series={chartOptions.series} 

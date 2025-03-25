@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Search, Bell, Settings, Menu, X } from "lucide-react";
 import { useLocation } from "react-router-dom";
-import {HeaderProps} from '../interfaces/header'
+import { HeaderProps } from '../interfaces/header';
 
-
-
-export default function Header({ toggleSidebar, onSearch }: HeaderProps) {
+export default function Header({ toggleSidebar, onSearch, showSearch = false }: HeaderProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,11 +16,11 @@ export default function Header({ toggleSidebar, onSearch }: HeaderProps) {
 
     const delayDebounce = setTimeout(() => {
       if (onSearch) onSearch(searchQuery);
-
     });
 
     return () => clearTimeout(delayDebounce);
   }, [searchQuery, onSearch]);
+
   useEffect(() => {
     setSearchQuery("");
   }, [location.pathname]);
@@ -67,45 +65,45 @@ export default function Header({ toggleSidebar, onSearch }: HeaderProps) {
       </div>
 
       <div className="flex md:gap-2 items-center" style={{ width: isSearchOpen ? "calc(350px - 28px)" : "auto" }}>
-        <div className="p-2 w-full md:w-64">
-          {!isSearchOpen && (
-            <Search
-              className="w-5 h-5 flex items-center text-gray-400 md:hidden cursor-pointer"
-              onClick={() => setIsSearchOpen(true)}
-            />
-          )}
+        {showSearch && (
+          <div className="p-2 w-full md:w-64">
+            {!isSearchOpen && (
+              <Search
+                className="w-5 h-5 flex items-center text-gray-400 md:hidden cursor-pointer"
+                onClick={() => setIsSearchOpen(true)}
+              />
+            )}
 
-          {isSearchOpen && (
-            <div className="flex items-center border bg-white rounded-lg   h-full"
-            
-            >
+            {isSearchOpen && (
+              <div className="flex items-center border bg-white rounded-lg h-full">
+                <input
+                  type="text"
+                  placeholder={location.pathname.includes("/deals") ? "Destination and Origin" : "Search anything"}
+                  className="px-2 py-1 border-none text-[12px] rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-gray-50"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <X
+                  className="w-5 h-5 text-[13px] text-gray-400 cursor-pointer"
+                  onClick={() => setIsSearchOpen(false)}
+                />
+              </div>
+            )}
+
+            <div className="relative hidden md:block w-full">
+              <Search
+                className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+              />
               <input
                 type="text"
                 placeholder={location.pathname.includes("/deals") ? "Destination and Origin" : "Search anything"}
-                className="px-2 py-1 border-none text-[12px] rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-gray-50"
+                className="pl-10 pr-4 py-2 border rounded-lg w-full text-[15px] focus:outline-none focus:ring-2 focus:ring-gray-50"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <X
-                className="w-5 h-5 text-[13px] text-gray-400 cursor-pointer"
-                onClick={() => setIsSearchOpen(false)}
-              />
             </div>
-          )}
-
-          <div className="relative hidden md:block w-full">
-            <Search
-              className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-            />
-            <input
-              type="text"
-              placeholder={location.pathname.includes("/deals") ? "Destination and Origin" : "Search anything"}
-              className="pl-10 pr-4 py-2 border rounded-lg w-full text-[15px] focus:outline-none focus:ring-2 focus:ring-gray-50"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
           </div>
-        </div>
+        )}
 
         <button className="p-3 md:p-2 hover:bg-gray-100 rounded-lg">
           <Bell className="w-5 h-5" />
@@ -115,7 +113,6 @@ export default function Header({ toggleSidebar, onSearch }: HeaderProps) {
           <Settings className="w-5 h-5" />
         </button>
 
-        
         <img
           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
           alt="Profile"
@@ -127,6 +124,5 @@ export default function Header({ toggleSidebar, onSearch }: HeaderProps) {
         </div>
       </div>
     </div>
-
   );
 }

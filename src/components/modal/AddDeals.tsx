@@ -108,7 +108,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
     const flightTypes = ["Domestic", "International"];
 
     return (
-        <div className=" h-[500px] overflow-y-auto lg:h-auto  rounded-lg">
+        <div className=" h-[500px] overflow-y-auto lg:h-[600px]  rounded-lg">
             <div className="bg-[#EAB308] mb-3 px-6 pt-3 flex justify-center items-center rounded-t-lg shadow-sm">
                 <h1 className="text-2xl font-semibold font-mono mb-4">{isEdit ? "Edit Deal" : "New Deal"}</h1>
             </div>
@@ -195,7 +195,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
                         <div className="flex flex-col">
                             <label htmlFor="image" className="text-gray-500 mb-1">Image</label>
                             <input
@@ -251,11 +251,11 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
                         <div className="flex flex-col">
                             <label className="text-gray-500 mb-1">Rating</label>
-                            <div className="p-2 rounded-3xl flex items-center">
-                                <div className="flex">
+                            <div className=" rounded-3xl flex items-center">
+                                <div className="flex ">
                                     {[1, 2, 3, 4, 5].map((star) => (
                                         <StarIcon
                                             key={star}
@@ -269,7 +269,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                         </div>
                         <div className="flex flex-col">
                             <label className="text-gray-500 mb-1">Flight Type</label>
-                            <div className="flex gap-4 p-2 rounded-3xl">
+                            <div className="flex gap-2 rounded-3xl">
                                 {flightTypes.map((type) => (
                                     <label key={type} className="flex items-center text-gray-500 gap-2 cursor-pointer">
                                         <input
@@ -304,7 +304,7 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                     <div className="flex justify-center">
                         <button
                             type="submit"
-                            className="bg-[#EAB308] text-black font-medium w-[30%] py-2 rounded-lg hover:bg-[#fedb73]"
+                            className="bg-[#EAB308] text-black font-medium w-[100px] py-2 rounded-lg hover:bg-[#fedb73]"
                         >
                             {isEdit ? "Update Deal" : "Add Deal"}
                         </button>
