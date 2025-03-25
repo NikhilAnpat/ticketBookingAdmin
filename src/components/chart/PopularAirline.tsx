@@ -69,7 +69,7 @@ const PopularAirline: React.FC = () => {
       />
       
 
-      <div className='absolute top-[30%] left-[43%] translate-x-[-5%] translate-y-0 xl:translate-[-50%, -50%]   xl:left-[38%]'>
+      <div className='absolute top-[30%] left-[43%]   xl:translate-x-[2%] lg:translate-x-[-6%] md:translate-x-[-20%] sm:translate-x-[20%] translate-x-[-20%]   xl:left-[38%]'>
         <div className='h-[70px] w-[70px] flex justify-center items-center rounded-full bg-[#E3C678]'>
         <Plane size={50}  className=''  />               
       </div>

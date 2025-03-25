@@ -6,7 +6,7 @@ const FlightScheduleChart: React.FC = () => {
   const options: ApexCharts.ApexOptions = {
     chart: {
       height: "100%",
-      width: "90%",
+      width: "100%",
       type: 'area',
       toolbar: {
         show: false,
@@ -78,7 +78,7 @@ const FlightScheduleChart: React.FC = () => {
 
   return (
     
-      <div className="h-[100%] lg:w-[100%] ">
+      <div className="h-[100%] w-[100%] ">
         <Chart options={options} series={series} type="area" height="250" />
       </div>
     
