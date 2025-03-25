@@ -16,7 +16,6 @@
         "@mui/x-date-pickers": "^7.27.1",
         "@react-oauth/google": "^0.12.1",
         "apexcharts": "^4.5.0",
-        "axios": "^1.8.4",
         "date-fns": "^4.1.0",
         "dayjs": "^1.11.13",
         "jwt-decode": "^4.0.0",
@@ -47,5 +46,17 @@
         "typescript": "^5.5.3",
         "typescript-eslint": "^8.3.0",
         "vite": "^6.2.1"
-    }
+    },
+    "description": "",
+    "main": "eslint.config.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/NikhilAnpat/ticketBookingAdmin.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/NikhilAnpat/ticketBookingAdmin/issues"
+    },
+    "homepage": "https://github.com/NikhilAnpat/ticketBookingAdmin#readme"
 }

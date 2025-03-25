@@ -531,8 +531,7 @@
             { "image": "", "name": "iris" }
         ],
         "status": "cancelled"
-    },
-    {
+    }, {
         "logo": "https://airhex.com/images/airline-logos/tail/ryanair.png",
         "flightName": "OrbitAir",
         "code": "OA-HI567",
