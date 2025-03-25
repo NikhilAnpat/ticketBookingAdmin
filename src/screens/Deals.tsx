@@ -10,7 +10,7 @@ import {DealsProps, OptionClickHandler, Promo} from "../components/interfaces/de
 const PromoCard: React.FC<Promo & { onDelete: (id: number) => void; onEdit: (deal: Promo) => void }> = ({
     id, title, description, discount, promoPeriod, image, price, rating, destination, origin, Type, Fname, onDelete, onEdit,
 }) => (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden w-[100%] lg:w-[45%] xl:w-[32%]">
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden w-[100%] lg:w-[48%] xl:w-[32.4%]">
         <img src={image} alt={title} className="w-full h-48 object-cover" />
         <div className="p-4">
             <div className="flex flex-col justify-start items-start h-auto">
@@ -173,8 +173,8 @@ const Deals: React.FC<DealsProps> = ({ searchQuery }) => {
     ];
 
     return (
-        <div className="p-5 w-[100%] h-[calc(100%-64px)]">
-            <div className="flex md:px-[20px] px-[5px] justify-end mb-4">
+        <div className="p-4 w-[100%] h-[calc(100%-64px)]">
+            <div className="flex md:pl-[20px] px-[5px] justify-end mb-4">
                 <button className="bg-gray-200 px-2 mr-2 md:mr-4 md:py-2 rounded" onClick={() => setShowFilter(true)}>
                     <FilterIcon  />
                 </button>

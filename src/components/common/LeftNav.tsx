@@ -56,7 +56,7 @@ export default function LeftNav({ isOpen, setIsOpen }: LeftNavProps) {
 
           {/* Navigation */}
           <div className="overflow-y-auto">
-            <NavItem icon={LayoutDashboard} text="Dashboard" to="/" onClick={() => setIsOpen(false)} />
+            <NavItem icon={LayoutDashboard} text="Dashboard" to="/dashboard" onClick={() => setIsOpen(false)} />
             <NavItem icon={Ticket} text="Bookings" to="/bookings" onClick={() => setIsOpen(false)} />
             <NavItem icon={Calendar} text="Schedule" to="/schedule" onClick={() => setIsOpen(false)} />
             <NavItem icon={CreditCard} text="Payments" to="/payments" onClick={() => setIsOpen(false)} />

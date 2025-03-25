@@ -3,6 +3,7 @@
         "logo": "https://www.pngitem.com/pimgs/m/146-1468479_airplane-logo-png-transparent-png.png",
       "flightName": "CloudNine Airline",
       "code": "CN-MU125",
+      "capacity": 210,
       "range": {
         "time1": "7:30 PM",
         "loc1": "Paris",
@@ -36,6 +37,7 @@
         "logo": "https://airhex.com/images/airline-logos/aeroflot.png",
       "flightName": "SkyWave Airways",
       "code": "SW-AB300",
+      "capacity": 210,
       "range": {
         "time1": "6:15 AM",
         "loc1": "London",
@@ -69,6 +71,7 @@
         "logo": "https://airhex.com/images/airline-logos/ryanair.png",
       "flightName": "GoldenAir",
       "code": "GA-XY789",
+      "capacity": 210,
       "range": {
         "time1": "10:00 AM",
         "loc1": "Tokyo",
@@ -102,6 +105,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/ryanair.png",
     "flightName": "BlueSky Flights",
     "code": "BS-KL456",
+    "capacity": 210,
     "range": {
       "time1": "9:45 AM",
       "loc1": "Sydney",
@@ -128,6 +132,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/aeroflot.png",
     "flightName": "StarJet",
     "code": "SJ-PQ901",
+    "capacity": 210,
     "range": {
       "time1": "3:20 PM",
       "loc1": "Miami",
@@ -154,6 +159,7 @@
     "logo": "https://www.pngitem.com/pimgs/m/146-1468479_airplane-logo-png-transparent-png.png",
     "flightName": "OceanAir",
     "code": "OA-RS234",
+    "capacity": 210,
     "range": {
       "time1": "11:30 PM",
       "loc1": "Singapore",
@@ -180,6 +186,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/ryanair.png",
     "flightName": "EagleWings",
     "code": "EW-TU567",
+    "capacity": 210,
     "range": {
       "time1": "8:00 AM",
       "loc1": "Berlin",
@@ -206,6 +213,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/aeroflot.png",
     "flightName": "Horizon Air",
     "code": "HA-VW890",
+    "capacity": 210,
     "range": {
       "time1": "2:45 PM",
       "loc1": "Mumbai",
@@ -232,6 +240,7 @@
     "logo": "https://airhex.com/images/airline-logos/ryanair.png",
     "flightName": "SilverLining",
     "code": "SL-XY123",
+    "capacity": 210,
     "range": {
       "time1": "6:30 AM",
       "loc1": "Moscow",
@@ -258,6 +267,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/ryanair.png",
     "flightName": "WindRiser",
     "code": "WR-NO567",
+    "capacity": 210,
     "range": {
       "time1": "3:30 PM",
       "loc1": "Shanghai",
@@ -284,6 +294,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/ryanair.png",
     "flightName": "GlobeTrotter",
     "code": "GT-PQ890",
+    "capacity": 210,
     "range": {
       "time1": "11:00 PM",
       "loc1": "Cairo",
@@ -310,6 +321,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/aeroflot.png",
     "flightName": "PolarAir",
     "code": "PA-RS123",
+    "capacity": 210,
     "range": {
       "time1": "6:45 AM",
       "loc1": "Oslo",
@@ -336,6 +348,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/ryanair.png",
     "flightName": "SunriseJets",
     "code": "SJ-TU456",
+    "capacity": 210,
     "range": {
       "time1": "9:30 PM",
       "loc1": "Delhi",
@@ -362,6 +375,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/aeroflot.png",
     "flightName": "MidnightSky",
     "code": "MS-VW789",
+    "capacity": 210,
     "range": {
       "time1": "1:00 AM",
       "loc1": "Lima",
@@ -388,6 +402,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/ryanair.png",
     "flightName": "CosmoAir",
     "code": "CA-XY012",
+    "capacity": 210,
     "range": {
       "time1": "4:20 PM",
       "loc1": "Zurich",
@@ -414,6 +429,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/ryanair.png",
     "flightName": "AuroraFlights",
     "code": "AF-ZA345",
+    "capacity": 210,
     "range": {
       "time1": "7:00 AM",
       "loc1": "Stockholm",
@@ -440,6 +456,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/aeroflot.png",
     "flightName": "SkyQuest",
     "code": "SQ-BC678",
+    "capacity": 210,
     "range": {
       "time1": "2:15 PM",
       "loc1": "Jakarta",
@@ -466,6 +483,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/ryanair.png",
     "flightName": "EclipseAir",
     "code": "EA-DE901",
+    "capacity": 210,
     "range": {
       "time1": "10:45 PM",
       "loc1": "Buenos Aires",
@@ -492,6 +510,7 @@
     "logo": "https://airhex.com/images/airline-logos/aeroflot.png",
     "flightName": "ZenithWings",
     "code": "ZW-FG234",
+    "capacity": 210,
     "range": {
       "time1": "5:30 AM",
       "loc1": "Vienna",
@@ -518,6 +537,7 @@
     "logo": "https://airhex.com/images/airline-logos/tail/ryanair.png",
     "flightName": "OrbitAir",
     "code": "OA-HI567",
+    "capacity": 210,
     "range": {
       "time1": "12:30 PM",
       "loc1": "Helsinki",
