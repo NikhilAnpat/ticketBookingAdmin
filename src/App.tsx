@@ -6,6 +6,7 @@ import Header from "./components/common/Header";
 import Dashboard from "./screens/Dashboard";
 import Bookings from "./screens/Bookings";
 import FlightTracking from "./screens/FlightTracking";
+import Payments from "./screens/Payments";
 import Messages from "./screens/Messages";
 import Schedule from "./screens/Schedule";
 import Deals from "./screens/Deals";
@@ -50,7 +51,7 @@ function App() {
           <Route path="/flight-tracking" element={<FlightTracking />} />
           <Route path="/messages" element={<Messages />} />
           <Route path="/schedule" element={<Schedule />} />
-          <Route path="/payments" element={<Dashboard />} />
+          <Route path="/payments" element={<Payments />} />
           <Route path="/deals" element={<Deals searchQuery={searchQuery} />} />
         </Routes>
       </div>
