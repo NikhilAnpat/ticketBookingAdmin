@@ -110,32 +110,32 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
     return (
         <div className=" h-[500px] overflow-y-auto lg:h-[600px]  rounded-lg">
             <div className="bg-[#EAB308] mb-3 px-6 pt-3 flex justify-center items-center rounded-t-lg shadow-sm">
-                <h1 className="text-2xl font-semibold font-mono mb-4">{isEdit ? "Edit Deal" : "New Deal"}</h1>
+                <h1 className="mb-4 font-mono text-2xl font-semibold">{isEdit ? "Edit Deal" : "New Deal"}</h1>
             </div>
             <div className="grid px-6 py-3">
-                <form onSubmit={handleSubmit} className="flex flex-col   gap-3">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div className="flex flex-col">
-                            <label htmlFor="title" className="text-gray-500 mb-1">Title</label>
+                            <label htmlFor="title" className="mb-1 text-gray-500">Title</label>
                             <input
                                 type="text"
                                 id="title"
                                 name="title"
                                 placeholder="Title"
-                                className="border p-2 rounded-xl focus:placeholder-transparent   "
+                                className="p-2 border rounded-xl focus:placeholder-transparent "
                                 value={formData.title}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
                         <div className="flex flex-col">
-                            <label htmlFor="Fname" className="text-gray-500 mb-1">Flight Name</label>
+                            <label htmlFor="Fname" className="mb-1 text-gray-500">Flight Name</label>
                             <input
                                 type="text"
                                 id="Fname"
                                 name="Fname"
                                 placeholder="Flight Name"
-                                className="border p-2 rounded-xl focus:placeholder-transparent"
+                                className="p-2 border rounded-xl focus:placeholder-transparent"
                                 value={formData.Fname}
                                 onChange={handleChange}
                                 required
@@ -143,29 +143,29 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div className="flex flex-col">
-                            <label htmlFor="discount" className="text-gray-500 mb-1">Discount</label>
+                            <label htmlFor="discount" className="mb-1 text-gray-500">Discount</label>
                             <input
                                 type="text"
                                 id="discount"
                                 name="discount"
                                 placeholder="Discount"
-                                className="border p-2 rounded-xl focus:placeholder-transparent"
+                                className="p-2 border rounded-xl focus:placeholder-transparent"
                                 value={formData.discount}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
                         <div className="flex flex-col">
-                            <label htmlFor="promoPeriod" className="text-gray-500 mb-1">Promo Period</label>
+                            <label htmlFor="promoPeriod" className="mb-1 text-gray-500">Promo Period</label>
                             <div className="relative">
                                 <input
                                     type="text"
                                     id="promoPeriod"
                                     name="promoPeriod"
                                     placeholder="Promo Period"
-                                    className="border p-2 rounded-xl w-full focus:placeholder-transparent"
+                                    className="w-full p-2 border rounded-xl focus:placeholder-transparent"
                                     value={formData.promoPeriod}
                                     onClick={toggleDatePicker}
                                     readOnly
@@ -195,9 +195,9 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                         <div className="flex flex-col">
-                            <label htmlFor="image" className="text-gray-500 mb-1">Image</label>
+                            <label htmlFor="image" className="mb-1 text-gray-500">Image</label>
                             <input
                                 type="file"
                                 id="image"
@@ -208,13 +208,13 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                             />
                         </div>
                         <div className="flex flex-col">
-                            <label htmlFor="price" className="text-gray-500 mb-1">Price ($)</label>
+                            <label htmlFor="price" className="mb-1 text-gray-500">Price ($)</label>
                             <input
                                 type="number"
                                 id="price"
                                 name="price"
                                 placeholder="Price ($)"
-                                className="border p-2 rounded-xl focus:placeholder-transparent"
+                                className="p-2 border rounded-xl focus:placeholder-transparent"
                                 value={formData.price}
                                 onChange={handleChange}
                                 required
@@ -222,28 +222,28 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div className="flex flex-col">
-                            <label htmlFor="origin" className="text-gray-500 mb-1">Origin</label>
+                            <label htmlFor="origin" className="mb-1 text-gray-500">Origin</label>
                             <input
                                 type="text"
                                 id="origin"
                                 name="origin"
                                 placeholder="Origin"
-                                className="border p-2 rounded-xl focus:placeholder-transparent"
+                                className="p-2 border rounded-xl focus:placeholder-transparent"
                                 value={formData.origin}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
                         <div className="flex flex-col">
-                            <label htmlFor="destination" className="text-gray-500 mb-1">Destination</label>
+                            <label htmlFor="destination" className="mb-1 text-gray-500">Destination</label>
                             <input
                                 type="text"
                                 id="destination"
                                 name="destination"
                                 placeholder="Destination"
-                                className="border p-2 rounded-xl focus:placeholder-transparent"
+                                className="p-2 border rounded-xl focus:placeholder-transparent"
                                 value={formData.destination}
                                 onChange={handleChange}
                                 required
@@ -251,10 +251,10 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                         <div className="flex flex-col">
-                            <label className="text-gray-500 mb-1">Rating</label>
-                            <div className=" rounded-3xl flex items-center">
+                            <label className="mb-1 text-gray-500">Rating</label>
+                            <div className="flex items-center rounded-3xl">
                                 <div className="flex ">
                                     {[1, 2, 3, 4, 5].map((star) => (
                                         <StarIcon
@@ -268,17 +268,17 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                             </div>
                         </div>
                         <div className="flex flex-col">
-                            <label className="text-gray-500 mb-1">Flight Type</label>
+                            <label className="mb-1 text-gray-500">Flight Type</label>
                             <div className="flex gap-2 rounded-3xl">
                                 {flightTypes.map((type) => (
-                                    <label key={type} className="flex items-center text-gray-500 gap-2 cursor-pointer">
+                                    <label key={type} className="flex items-center gap-2 text-gray-500 cursor-pointer">
                                         <input
                                             type="radio"
                                             name="Type"
                                             value={type}
                                             checked={formData.Type === type}
                                             onChange={handleChange}
-                                            className="accent-green-500 w-4 h-4 cursor-pointer "
+                                            className="w-4 h-4 cursor-pointer accent-green-500 "
                                             required
                                         />
                                         <span>{type}</span>
@@ -289,12 +289,12 @@ const AddDeals: React.FC<AddDealsProps> = ({ onAddDeal, onEditDeal, dealToEdit, 
                     </div>
 
                     <div className="flex flex-col">
-                        <label htmlFor="description" className="text-gray-500 mb-1">Description</label>
+                        <label htmlFor="description" className="mb-1 text-gray-500">Description</label>
                         <textarea
                             id="description"
                             name="description"
                             placeholder="Description"
-                            className="border p-4 rounded-xl focus:placeholder-transparent"
+                            className="p-4 border rounded-xl focus:placeholder-transparent"
                             value={formData.description}
                             onChange={handleChange}
                             required
