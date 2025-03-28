@@ -3,13 +3,15 @@ import { Filter, Clock, Plus, Calendar } from "lucide-react";
 import { DateRange, RangeKeyDict, Range } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+// import the add booking file for add booking
+import AddBooking from "../components/modal/addBooking";
+
 import bookingdata from "../components/dummyData/booking/FlightBookingData.json";
 import {
   BookingRowProps,
   Flight,
 } from "../components/interfaces/bookinginterface";
-// import the filents/interfaces/bookinginterface";
-import BookingUserDetails from "./../components/modal/BookingUserDetails";
+import BookingUserDetails from "../components/modal/bookingUserList";
 
 const BookingRow: React.FC<BookingRowProps> = ({ flight }) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -76,8 +78,9 @@ const BookingRow: React.FC<BookingRowProps> = ({ flight }) => {
                   alt={person.name}
                 />
               ))}
-              {flight.people.length > 3 && (
-                <span className="!ml-[2px]">+{flight.people.length - 3}</span>
+              {/* i have added count of passenger here  */}
+              {flight.people.length > 0 && (
+                <span className="!ml-[2px]">{flight.people.length}</span>
               )}
             </div>
             {/* popup  */}
@@ -143,6 +146,8 @@ export default function Bookings() {
   const [showAirlineDropdown, setShowAirlineDropdown] = useState(false);
   const [showStatusDropdown, setShowStatusDropdown] = useState(false);
   const [showDepartureDropdown, setShowDepartureDropdown] = useState(false);
+    const [isAddBookingOpen, setIsAddBookingOpen] = useState(false);
+
   const [dateRange, setDateRange] = useState<Range[]>([
     {
       startDate: undefined,
@@ -282,6 +287,7 @@ export default function Bookings() {
   };
 
   return (
+    <>
     <div className="p-3 bg-gray-50">
       <div className="flex flex-col-reverse items-start gap-2 mb-6 sm:flex-row sm:gap-0 sm:justify-between sm:items-center">
         <div className="flex flex-row justify-center space-x-2 sm:items-center ">
@@ -433,11 +439,18 @@ export default function Bookings() {
             </div>
           </div>
         </div>
-
-        <button className="flex items-center px-4 py-2 space-x-2 text-white rounded-lg bg-amber-500 hover:bg-amber-600">
+        {/* add booking popup here */}
+        <button
+          className="flex items-center px-4 py-2 space-x-2 text-white rounded-lg bg-amber-500 hover:bg-amber-600"
+          onClick={() => setIsAddBookingOpen(true)}
+        >
           <Plus className="w-4 h-4" />
           <span>Add Booking</span>
         </button>
+        {/* AddBooking Popup */}
+        {isAddBookingOpen && (
+          <AddBooking closePopup={() => setIsAddBookingOpen(false)} />
+        )}
       </div>
 
       <div className="space-y-4">
@@ -452,5 +465,6 @@ export default function Bookings() {
         )}
       </div>
     </div>
+   </>
   );
 }
