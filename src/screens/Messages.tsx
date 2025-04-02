@@ -2,9 +2,16 @@ import React, { useState, useRef } from 'react';
 import { Search, Paperclip, Send, MoreVertical, Link2, Image, Video, ArrowLeft, User, X } from 'lucide-react';
 import {ChatGroup} from '../components/interfaces/messageinterface'
 
-
-
-
+interface Message {
+  id: string;
+  sender: string;
+  role: string;
+  time: string;
+  content: string;
+  files?: File[];
+  online?: boolean;
+  unread?: boolean;
+}
 
 const chatGroups: ChatGroup[] = [
   {
@@ -140,16 +147,18 @@ const ChatSidebar = ({ selectedChat, onSelectChat, isMobile }: { selectedChat: s
 
 const ChatMain = ({ selectedChat, onBack, onShowProfile, isMobile }: { selectedChat: string, onBack: () => void, onShowProfile: () => void, isMobile: boolean }) => {
   const [newMessage, setNewMessage] = useState('');
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messagesMap, setMessagesMap] = useState<Record<string, Message[]>>({});
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const chat = chatGroups.find((g) => g.id === selectedChat);
   
   if (!chat) return null;
 
+  const currentMessages = messagesMap[selectedChat] || [];
+
   const handleSendMessage = () => {
     if (newMessage.trim() || selectedFiles.length > 0) {
-      const newMsg = {
+      const newMsg: Message = {
         id: Date.now().toString(),
         sender: 'Admin',
         role: 'Admin',
@@ -157,7 +166,12 @@ const ChatMain = ({ selectedChat, onBack, onShowProfile, isMobile }: { selectedC
         content: newMessage,
         files: selectedFiles
       };
-      setMessages([...messages, newMsg]);
+
+      setMessagesMap(prev => ({
+        ...prev,
+        [selectedChat]: [...(prev[selectedChat] || []), newMsg]
+      }));
+      
       setNewMessage('');
       setSelectedFiles([]);
     }
@@ -224,13 +238,13 @@ const ChatMain = ({ selectedChat, onBack, onShowProfile, isMobile }: { selectedC
             </div>
           </div>
 
-          {messages.map((msg) => (
+          {currentMessages.map((msg) => (
             <div key={msg.id} className="flex items-start space-x-3 justify-end">
               <div className="bg-amber-500 text-white p-3 rounded-lg shadow-sm max-w-md">
                 <p>{msg.content}</p>
                 {msg.files && msg.files.length > 0 && (
                   <div className="mt-2 space-y-2">
-                    {msg.files.map((file: File, index: number) => (
+                    {msg.files.map((file, index) => (
                       <div key={index} className="flex items-center bg-amber-600 rounded p-2">
                         {file.type.includes('image') ? (
                           <Image className="w-4 h-4 mr-2" />
