@@ -241,7 +241,7 @@ const ChatMain = ({ selectedChat, onBack, onShowProfile, isMobile }: { selectedC
           {currentMessages.map((msg) => (
             <div key={msg.id} className="flex items-start space-x-3 justify-end">
               <div className="bg-amber-500 text-white p-3 rounded-lg shadow-sm max-w-md">
-                <p>{msg.content}</p>
+                <p className='max-w-md break-words'>{msg.content}</p>
                 {msg.files && msg.files.length > 0 && (
                   <div className="mt-2 space-y-2">
                     {msg.files.map((file, index) => (
