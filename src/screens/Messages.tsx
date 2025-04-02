@@ -81,7 +81,7 @@ const ChatSidebar = ({ selectedChat, onSelectChat, isMobile }: { selectedChat: s
   );
 
   return (
-    <div className={`${isMobile ? 'w-full' : 'w-80'} border-r bg-white flex flex-col h-full`}>
+    <div className={`${isMobile ? 'w-full' : 'w-[320px] min-w-[320px]'} border-r bg-white flex flex-col h-full`}>
       <div className="p-4 border-b">
         <div className="relative">
           <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -95,82 +95,45 @@ const ChatSidebar = ({ selectedChat, onSelectChat, isMobile }: { selectedChat: s
         </div>
       </div>
 
-      {searchQuery ? (
-        <div className="flex-1 overflow-y-auto">
-          {filteredChats.length > 0 ? (
-            filteredChats.map((group) => (
-              <div
-                key={group.id}
-                className={`p-4 cursor-pointer hover:bg-gray-50 ${
-                  selectedChat === group.id ? 'bg-gray-50' : ''
-                }`}
-                onClick={() => onSelectChat(group.id)}
-              >
-                <div className="flex items-center space-x-3">
-                  {group.icon ? (
-                    <img src={group.icon} alt={group.name} className="w-10 h-10 rounded-full" />
-                  ) : (
-                    <div className={`w-10 h-10 rounded-full ${group.color || 'bg-gray-200'} flex items-center justify-center text-white font-medium`}>
-                      {group.name.charAt(0)}
-                    </div>
+      <div className="flex-1 overflow-y-auto">
+        {(searchQuery ? filteredChats : chatGroups).map((group) => (
+          <div
+            key={group.id}
+            className={`p-4 cursor-pointer hover:bg-gray-50 ${
+              selectedChat === group.id ? 'bg-gray-50' : ''
+            }`}
+            onClick={() => onSelectChat(group.id)}
+          >
+            <div className="flex items-center space-x-3">
+              {group.icon ? (
+                <img src={group.icon} alt={group.name} className="w-10 h-10 rounded-full" />
+              ) : (
+                <div className={`w-10 h-10 rounded-full ${group.color || 'bg-gray-200'} flex items-center justify-center text-white font-medium`}>
+                  {group.name.charAt(0)}
+                </div>
+              )}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-medium truncate">{group.name}</h3>
+                  <span className="text-sm text-gray-500 ml-2 flex-shrink-0">{group.messages[0].time}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-gray-500 truncate">{group.messages[0].content}</p>
+                  {group.messages[0].unread && (
+                    <span className="w-2 h-2 bg-amber-500 rounded-full flex-shrink-0 ml-2"></span>
                   )}
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-medium">{group.name}</h3>
-                      <span className="text-sm text-gray-500">{group.messages[0].time}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm text-gray-500 truncate">{group.messages[0].content}</p>
-                      {group.messages[0].unread && (
-                        <span className="w-2 h-2 bg-amber-500 rounded-full"></span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="p-4 text-center text-gray-500">
-              <p>No results found</p>
-              <p className="text-sm">Try searching with different keywords</p>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="flex-1 overflow-y-auto">
-          {chatGroups.map((group) => (
-            <div
-              key={group.id}
-              className={`p-4 cursor-pointer hover:bg-gray-50 ${
-                selectedChat === group.id ? 'bg-gray-50' : ''
-              }`}
-              onClick={() => onSelectChat(group.id)}
-            >
-              <div className="flex items-center space-x-3">
-                {group.icon ? (
-                  <img src={group.icon} alt={group.name} className="w-10 h-10 rounded-full" />
-                ) : (
-                  <div className={`w-10 h-10 rounded-full ${group.color || 'bg-gray-200'} flex items-center justify-center text-white font-medium`}>
-                    {group.name.charAt(0)}
-                  </div>
-                )}
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium">{group.name}</h3>
-                    <span className="text-sm text-gray-500">{group.messages[0].time}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm text-gray-500 truncate">{group.messages[0].content}</p>
-                    {group.messages[0].unread && (
-                      <span className="w-2 h-2 bg-amber-500 rounded-full"></span>
-                    )}
-                  </div>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+        {searchQuery && filteredChats.length === 0 && (
+          <div className="p-4 text-center text-gray-500">
+            <p>No results found</p>
+            <p className="text-sm">Try searching with different keywords</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
@@ -355,53 +318,65 @@ const ChatMain = ({ selectedChat, onBack, onShowProfile, isMobile }: { selectedC
   );
 };
 
-const ChatInfo = ({ onBack, isMobile }: { onBack?: () => void, isMobile?: boolean }) => (
-  <div className={`${isMobile ? 'w-full' : 'w-80'} bg-white h-full flex flex-col`}>
-    <div className="p-4 border-b flex items-center justify-between">
-      {onBack && (
-        <button onClick={onBack} className="p-1 hover:bg-gray-100 rounded-lg">
-          <ArrowLeft className="w-5 h-5 text-gray-500" />
-        </button>
-      )}
-      <h3 className="font-medium flex-1 text-center">Profile</h3>
-      <div className="w-7" /> {/* Spacer for alignment */}
-    </div>
+const ChatInfo = ({ onBack, isMobile, selectedChat }: { onBack?: () => void, isMobile?: boolean, selectedChat: string }) => {
+  const selectedUser = chatGroups.find(group => group.id === selectedChat);
 
-    <div className="flex-1 overflow-y-auto p-4">
-      <div className="space-y-6">
-        <div className="text-center">
-          <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4"></div>
-          <h4 className="font-medium text-lg">Sonia Reagan</h4>
-          <p className="text-sm text-gray-500">Customer</p>
-        </div>
+  if (!selectedUser) return null;
 
-        <div>
-          <h4 className="font-medium mb-3">Files</h4>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-white rounded">
-                  <Image className="w-5 h-5 text-gray-500" />
-                </div>
-                <span className="text-sm">Passport.pdf</span>
+  return (
+    <div className={`${isMobile ? 'w-full' : 'w-[320px] min-w-[320px]'} bg-white h-full flex flex-col`}>
+      <div className="p-4 border-b flex items-center justify-between">
+        {onBack && (
+          <button onClick={onBack} className="p-1 hover:bg-gray-100 rounded-lg">
+            <ArrowLeft className="w-5 h-5 text-gray-500" />
+          </button>
+        )}
+        <h3 className="font-medium flex-1 text-center">Profile</h3>
+        <div className="w-7" /> {/* Spacer for alignment */}
+      </div>
+
+      <div className="flex-1 overflow-y-auto p-4">
+        <div className="space-y-6">
+          <div className="text-center">
+            {selectedUser.icon ? (
+              <img src={selectedUser.icon} alt={selectedUser.name} className="w-24 h-24 rounded-full mx-auto mb-4" />
+            ) : (
+              <div className={`w-24 h-24 rounded-full ${selectedUser.color || 'bg-gray-200'} mx-auto mb-4 flex items-center justify-center text-white text-2xl font-medium`}>
+                {selectedUser.name.charAt(0)}
               </div>
-              <span className="text-xs text-gray-500">2.3 MB</span>
-            </div>
-            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-white rounded">
-                  <Video className="w-5 h-5 text-gray-500" />
+            )}
+            <h4 className="font-medium text-lg">{selectedUser.name}</h4>
+            <p className="text-sm text-gray-500">{selectedUser.role}</p>
+          </div>
+
+          <div>
+            <h4 className="font-medium mb-3">Files</h4>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-white rounded">
+                    <Image className="w-5 h-5 text-gray-500" />
+                  </div>
+                  <span className="text-sm">Passport.pdf</span>
                 </div>
-                <span className="text-sm">Boarding.mp4</span>
+                <span className="text-xs text-gray-500">2.3 MB</span>
               </div>
-              <span className="text-xs text-gray-500">12 MB</span>
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-white rounded">
+                    <Video className="w-5 h-5 text-gray-500" />
+                  </div>
+                  <span className="text-sm">Boarding.mp4</span>
+                </div>
+                <span className="text-xs text-gray-500">12 MB</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default function Messages() {
   const [selectedChat, setSelectedChat] = React.useState(chatGroups[0].id);
@@ -442,7 +417,7 @@ export default function Messages() {
       case 'chat':
         return <ChatMain selectedChat={selectedChat} onBack={handleBack} onShowProfile={handleShowProfile} isMobile={true} />;
       case 'profile':
-        return <ChatInfo onBack={handleBack} isMobile={true} />;
+        return <ChatInfo onBack={handleBack} isMobile={true} selectedChat={selectedChat} />;
     }
   }
 
@@ -450,7 +425,7 @@ export default function Messages() {
     <div className="flex h-[calc(100vh-4rem)]">
       <ChatSidebar selectedChat={selectedChat} onSelectChat={setSelectedChat} isMobile={false} />
       <ChatMain selectedChat={selectedChat} onBack={handleBack} onShowProfile={handleShowProfile} isMobile={false} />
-      <ChatInfo isMobile={false} />
+      <ChatInfo isMobile={false} selectedChat={selectedChat} />
     </div>
   );
 }
