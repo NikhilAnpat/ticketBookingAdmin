@@ -1,11 +1,10 @@
-
 import { useState, useRef, useEffect } from "react";
 import { DetailsList, DetailsListLayoutMode, IColumn } from "@fluentui/react";
 import { Button } from "@fluentui/react-components";
-import { Search, Filter, Calendar, } from 'lucide-react';
-import { DateRange, RangeKeyDict, Range } from 'react-date-range';
-import 'react-date-range/dist/styles.css';
-import 'react-date-range/dist/theme/default.css';
+import { Search, Filter, Calendar } from "lucide-react";
+import { DateRange, RangeKeyDict, Range } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 import { LuSquareArrowOutUpRight } from "react-icons/lu";
 import bookingsData from "../components/dummyData/payments/payments.json";
@@ -31,30 +30,67 @@ const columns: IColumn[] = [
     flexGrow: 1,
     onRender: (item: Booking) => (
       <div className="flex items-center gap-2" style={{ fontSize: "16px" }}>
-
         {item.name}
       </div>
     ),
   },
   {
-    key: "bookingCode", name: "Booking Code", fieldName: "bookingCode", headerClassName: "text-lg font-bold text-gray-800", minWidth: 100, maxWidth: 200, flexGrow: 1,
-    onRender: (item) => <span style={{ fontSize: "16px" }}>{item.bookingCode}</span>,
+    key: "bookingCode",
+    name: "Booking Code",
+    fieldName: "bookingCode",
+    headerClassName: "text-lg font-bold text-gray-800",
+    minWidth: 100,
+    maxWidth: 200,
+    flexGrow: 1,
+    onRender: (item) => (
+      <span style={{ fontSize: "16px" }}>{item.bookingCode}</span>
+    ),
   },
   {
-    key: "airline", name: "Airline", fieldName: "airline", headerClassName: "text-lg font-bold text-gray-800", flexGrow: 1, minWidth: 100, maxWidth: 200,
-    onRender: (item) => <span style={{ fontSize: "16px" }}>{item.airline}</span>,
+    key: "airline",
+    name: "Airline",
+    fieldName: "airline",
+    headerClassName: "text-lg font-bold text-gray-800",
+    flexGrow: 1,
+    minWidth: 100,
+    maxWidth: 200,
+    onRender: (item) => (
+      <span style={{ fontSize: "16px" }}>{item.airline}</span>
+    ),
   },
   {
-    key: "route", name: "Route", fieldName: "route", headerClassName: "text-lg font-bold text-gray-800", flexGrow: 1, minWidth: 100, maxWidth: 200,
+    key: "route",
+    name: "Route",
+    fieldName: "route",
+    headerClassName: "text-lg font-bold text-gray-800",
+    flexGrow: 1,
+    minWidth: 100,
+    maxWidth: 200,
     onRender: (item) => <span style={{ fontSize: "16px" }}>{item.route}</span>,
   },
   {
-    key: "billingDate", name: "Billing Date", headerClassName: "text-lg font-bold text-gray-800", fieldName: "billingDate", flexGrow: 1, minWidth: 100, maxWidth: 200,
-    onRender: (item) => <span style={{ fontSize: "16px" }}>{item.billingDate}</span>,
+    key: "billingDate",
+    name: "Billing Date",
+    headerClassName: "text-lg font-bold text-gray-800",
+    fieldName: "billingDate",
+    flexGrow: 1,
+    minWidth: 100,
+    maxWidth: 200,
+    onRender: (item) => (
+      <span style={{ fontSize: "16px" }}>{item.billingDate}</span>
+    ),
   },
   {
-    key: "amount", name: "Amount ", fieldName: "amount", headerClassName: "text-lg font-bold text-gray-800", flexGrow: 1, minWidth: 90, maxWidth: 170,
-    onRender: (item) => <span style={{ fontSize: "16px" }}> ${item.amount}</span>,
+    key: "amount",
+    name: "Amount ",
+    fieldName: "amount",
+    headerClassName: "text-lg font-bold text-gray-800",
+    flexGrow: 1,
+    minWidth: 90,
+    maxWidth: 170,
+    onRender: (item) => (
+      <span style={{ fontSize: "16px" }}> ${item.amount}</span>
+    ),
   },
   {
     key: "status",
@@ -99,7 +135,7 @@ const Payments = () => {
     {
       startDate: new Date(),
       endDate: new Date(),
-      key: 'selection',
+      key: "selection",
     },
   ]);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -111,46 +147,59 @@ const Payments = () => {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
 
   useEffect(() => {
     setBookings(bookingsData);
   }, []);
 
   const filteredBookings = bookings.filter((booking) => {
-
-    const matchesStatus = selectedStatus ? booking.status === selectedStatus : true;
+    const matchesStatus = selectedStatus
+      ? booking.status === selectedStatus
+      : true;
     const normalizedSearchQuery = searchQuery.replace(/\s+/g, "");
     const matchesSearchQuery =
-      booking.name.toLowerCase().includes(normalizedSearchQuery.toLowerCase()) ||
-      booking.airline.toLowerCase().includes(normalizedSearchQuery.toLowerCase()) ||
-      booking.route.toLowerCase().includes(normalizedSearchQuery.toLowerCase()) ||
-      booking.bookingCode.toLowerCase().includes(normalizedSearchQuery.toLowerCase());
+      booking.name
+        .toLowerCase()
+        .includes(normalizedSearchQuery.toLowerCase()) ||
+      booking.airline
+        .toLowerCase()
+        .includes(normalizedSearchQuery.toLowerCase()) ||
+      booking.route
+        .toLowerCase()
+        .includes(normalizedSearchQuery.toLowerCase()) ||
+      booking.bookingCode
+        .toLowerCase()
+        .includes(normalizedSearchQuery.toLowerCase());
 
     return matchesStatus && matchesSearchQuery;
   });
   return (
-    <div className="p-5 w-full">
-      <div className="rounded-lg bg-white p-2 ">
-        <div className="flex flex-wrap sm:flex-row justify-between p-2">
-          <h4 className="font-semibold text-xl w-full sm:w-auto">Transactions</h4>
-          <div className="flex flex-wrap justify-center gap-3 w-full sm:w-auto">
+    <div className="w-full p-5">
+      <div className="p-2 bg-white rounded-lg ">
+        <div className="flex flex-wrap justify-between p-2 sm:flex-row">
+          <h4 className="w-full text-xl font-semibold sm:w-auto">
+            Transactions
+          </h4>
+          <div className="flex flex-wrap justify-center w-full gap-3 sm:w-auto">
             <div className="relative w-full sm:w-64">
-              <Search className="w-5 h-5 absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <Search className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 left-2 top-1/2" />
               <input
                 type="text"
                 placeholder="Search name, airline etc."
-                className="pl-10 pr-4 py-2 border rounded-lg w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full py-2 pl-10 pr-4 border rounded-lg sm:w-64 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -200,18 +249,28 @@ const Payments = () => {
               >
                 <Calendar size={24} />
                 <span>
-                  {range[0].startDate && range[0].endDate ? (
-                    range[0].startDate.toDateString() === range[0].endDate.toDateString()
-                      ? new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(range[0].startDate)
-                      : `${range[0].startDate.getDate()}-${range[0].endDate.getDate()} ${range[0].endDate.toLocaleString('en-GB', { month: 'long' })} ${range[0].endDate.getFullYear()}`
-                  ) : 'Select Date'}
+                  {range[0].startDate && range[0].endDate
+                    ? range[0].startDate.toDateString() ===
+                      range[0].endDate.toDateString()
+                      ? new Intl.DateTimeFormat("en-GB", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        }).format(range[0].startDate)
+                      : `${range[0].startDate.getDate()}-${range[0].endDate.getDate()} ${range[0].endDate.toLocaleString(
+                          "en-GB",
+                          { month: "long" }
+                        )} ${range[0].endDate.getFullYear()}`
+                    : "Select Date"}
                 </span>
               </button>
               {isOpen && (
-                <div className="absolute mt-2  bg-white border rounded-lg shadow-lg right-0">
+                <div className="absolute right-0 mt-2 bg-white border rounded-lg shadow-lg">
                   <DateRange
                     editableDateInputs={false}
-                    onChange={(item: RangeKeyDict) => setRange([item.selection])}
+                    onChange={(item: RangeKeyDict) =>
+                      setRange([item.selection])
+                    }
                     moveRangeOnFirstSelection={true}
                     ranges={range}
                     dateDisplayFormat="dd MM yyyy"
@@ -221,30 +280,19 @@ const Payments = () => {
             </div>
           </div>
         </div>
-
-
-
-        <div className="h-[400px] overflow-y-auto rounded-xl">
-
-          <DetailsList
-            items={filteredBookings}
-            columns={columns}
-            layoutMode={DetailsListLayoutMode.fixedColumns}
-            selectionMode={0}
-            className="text-xl font-bold"
-            styles={{
-              root: { maxHeight: "400px", overflowY: "auto" },
-              headerWrapper: {
-                position: "sticky",
-                top: 0,
-                zIndex: 5,
-                background: "white",
-              },
-            }}
-          />
+        <div className="h-[400px] w-full overflow-x-auto">
+          <div className="min-w-full">
+            <DetailsList
+              items={filteredBookings}
+              columns={columns}
+              layoutMode={DetailsListLayoutMode.fixedColumns}
+              selectionMode={0}
+              className="text-xl font-bold"
+            />
+          </div>
         </div>
       </div>
     </div>
-  )
-}
-export default Payments
+  );
+};
+export default Payments;

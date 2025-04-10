@@ -56,11 +56,11 @@ export default function Filter({ onApply }: { onApply: (filteredData: Promo[]) =
     };
 
     return (
-        <div className="p-6  rounded-lg w-full">
+        <div className="w-full p-6 rounded-lg">
             
             
             <div className="mb-4">
-                <span className="block font-semibold mb-2">Date Range</span>
+                <span className="block mb-2 font-semibold">Date Range</span>
                 <DateRange
                     editableDateInputs={true}
                     onChange={item => setState([item.selection])}
@@ -71,7 +71,7 @@ export default function Filter({ onApply }: { onApply: (filteredData: Promo[]) =
             </div>
             
             <div className="mb-4">
-                <span className="block font-semibold mb-2">Discount</span>
+                <span className="block mb-2 font-semibold">Discount</span>
                 <div className="flex items-center gap-4">
                     {[10, 20, 30, 40].map((discount) => (
                         <label key={discount} className="flex items-center">
@@ -93,7 +93,7 @@ export default function Filter({ onApply }: { onApply: (filteredData: Promo[]) =
             </div>
             
             <div className="mb-4">
-                <span className="block font-semibold mb-2">Rating</span>
+                <span className="block mb-2 font-semibold">Rating</span>
                 <div className="flex items-center gap-2">
                     <div className="flex">
                         {Array(5).fill(0).map((_, index) => {
