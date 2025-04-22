@@ -291,8 +291,8 @@ export default function Bookings() {
 
   return (
     <>
-    <div className="min-h-screen p-3 bg-gray-50">
-      <div className="fixed right-0 z-50 flex flex-col-reverse items-start gap-2 p-3 left-[13rem] top-10 sm:flex-row sm:gap-0 sm:justify-between sm:items-center bg-gray-50">
+    <div className="p-3 bg-gray-50 overflow-hidden">
+      <div className="flex flex-col-reverse items-start gap-2 p-3 left-[13rem] top-10 sm:flex-row sm:gap-0 sm:justify-between sm:items-center bg-gray-50  ">
         <div className="flex flex-row justify-center space-x-2 sm:items-center">
           <div className="flex gap-2">
             {/* Date Range Filter */}
@@ -456,7 +456,7 @@ export default function Bookings() {
         )}
       </div>
 
-      <div className="space-y-4 mt-[12px] sm:mt-[50px]">
+      <div className="space-y-4 mt-[10px] sm:mt-[20px] overflow-y-auto max-h-[calc(100vh-200px)]">
         {filteredFlights.length > 0 ? (
           filteredFlights.map((flight, index) => (
             <BookingRow key={index} flight={flight} />
