@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, ArrowRight, Filter } from "lucide-react";
 import FlightDetail from "./FlightDetail";
 import { Flight } from "../components/interfaces/sheuduleInterface";
+import AddFlight from "../components/modal/addFlight";
 
 const flights: Flight[] = [
   {
@@ -84,6 +85,7 @@ const FlightCard = ({
 }: {
   flight: Flight;
   onViewDetails: () => void;
+  onEdit: () => void;
 }) => (
   <div className="relative p-2 mb-4 bg-white rounded-lg shadow-md sm:p-6">
     {/* Facilities Section - Only visible on larger screens at top */}
@@ -203,12 +205,20 @@ const FlightCard = ({
             ${flight.price}
           </p>
         </div>
-        <button
-          onClick={onViewDetails}
-          className="px-3 py-1.5 text-xs text-white bg-gray-900 rounded-lg sm:px-4 sm:py-2 sm:text-sm hover:bg-gray-800"
-        >
-          View Details
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={onViewDetails}
+            className="px-3 py-1.5 text-xs text-white bg-gray-900 rounded-lg sm:px-4 sm:py-2 sm:text-sm hover:bg-gray-800"
+          >
+            View Details
+          </button>
+          {/* <button
+            onClick={onEdit}
+            className="px-3 py-1.5 text-xs text-white bg-amber-500 rounded-lg sm:px-4 sm:py-2 sm:text-sm hover:bg-amber-600"
+          >
+            Edit
+          </button> */}
+        </div>
       </div>
     </div>
   </div>
@@ -216,18 +226,45 @@ const FlightCard = ({
 
 export default function Schedule() {
   const [selectedFlight, setSelectedFlight] = useState<Flight | null>(null);
+  const [isflightOpen, setIsFlightOpen] = useState(false);
+  const [flightsList, setFlightsList] = useState<Flight[]>(() => {
+    const stored = localStorage.getItem("flightsList");
+    return stored ? JSON.parse(stored) : flights;
+  });
+  const [editFlight, setEditFlight] = useState<Flight | null>(null);
+
+  useEffect(() => {
+    localStorage.setItem("flightsList", JSON.stringify(flightsList));
+  }, [flightsList]);
+
+  const handleAddFlight = (newFlight: Flight) => {
+    setFlightsList([...flightsList, newFlight]);
+    setIsFlightOpen(false);
+  };
+
+  const handleUpdateFlight = (updatedFlight: Flight) => {
+    setFlightsList((prev) => prev.map(f => f.id === updatedFlight.id ? updatedFlight : f));
+    setEditFlight(null);
+    setIsFlightOpen(false);
+    // If details view is open for this flight, update it
+    if (selectedFlight && selectedFlight.id === updatedFlight.id) {
+      setSelectedFlight(updatedFlight);
+    }
+  };
 
   if (selectedFlight) {
     return (
       <FlightDetail
         flight={selectedFlight}
         onBack={() => setSelectedFlight(null)}
+        onUpdateFlight={handleUpdateFlight}
       />
     );
   }
+  
 
   return (
-    <div className="overflow-hidden bg-gray-50">
+    <div className={`overflow-hidden bg-gray-50 ${isflightOpen || editFlight ? 'h-screen overflow-hidden' : ''}`}>
       <div className="left-[13rem] top-10 px-6 py-4 bg-gray-50 block">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -249,13 +286,15 @@ export default function Schedule() {
                     <option>First Class</option>
                   </select>
                 </div>
-                <div className="flex ">
+                <div className="flex">
                   <button className="flex items-center px-4 py-2 space-x-2 sm:w-auto hover:bg-gray-50">
                     <Filter className="w-4 h-4" />
                     <span className="hidden lg:inline">Filter</span>
                   </button>
-                  {/* "Add Flight" button */}
-                  <button className="flex items-center px-2 py-1 space-x-2 text-white rounded-lg bg-amber-500 hover:bg-amber-600 lg:mx-2">
+                  <button
+                    className="flex items-center px-2 py-1 space-x-2 text-white rounded-lg bg-amber-500 hover:bg-amber-600 lg:mx-2"
+                    onClick={() => setIsFlightOpen(true)}
+                  >
                     <span>Add Flight</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
@@ -267,17 +306,31 @@ export default function Schedule() {
       </div>
 
       {/* Flight Cards Container */}
-      <div className="mt-[10px] sm:mt-[20px] px-6">
+      <div className={`mt-[10px] sm:mt-[20px] px-6 ${isflightOpen || editFlight ? '' : ''}`}>
         <div className="overflow-y-auto max-h-[calc(100vh-200px)] space-y-4">
-          {flights.map((flight) => (
+          {flightsList.map((flight) => (
             <FlightCard
               key={flight.id}
               flight={flight}
               onViewDetails={() => setSelectedFlight(flight)}
+              onEdit={() => setEditFlight(flight)}
             />
           ))}
         </div>
       </div>
+
+      {/* Add/Edit Flight Popup */}
+      {(isflightOpen || editFlight) && (
+        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-30">
+          <div className="w-full max-w-4xl mx-4 bg-white rounded-lg shadow-lg">
+            <AddFlight
+              closePopup={() => { setIsFlightOpen(false); setEditFlight(null); }}
+              onAddFlight={editFlight ? handleUpdateFlight : handleAddFlight}
+              flight={editFlight || undefined}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

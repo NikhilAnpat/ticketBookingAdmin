@@ -291,7 +291,7 @@ export default function Bookings() {
 
   return (
     <>
-    <div className="p-3 bg-gray-50 overflow-hidden">
+    <div className="p-3 overflow-hidden bg-gray-50">
       <div className="flex flex-col-reverse items-start gap-2 p-3 left-[13rem] top-10 sm:flex-row sm:gap-0 sm:justify-between sm:items-center bg-gray-50  ">
         <div className="flex flex-row justify-center space-x-2 sm:items-center">
           <div className="flex gap-2">

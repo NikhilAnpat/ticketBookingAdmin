@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import BookingUserDetails from "./BookingUserDetails"; // Import user details popup
 
 function BookingUserList({ flight, onClose }) {
