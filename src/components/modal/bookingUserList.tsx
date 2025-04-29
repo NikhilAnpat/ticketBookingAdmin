@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import BookingUserDetails from "./BookingUserDetails"; // Import user details popup
 
 function BookingUserList({ flight, onClose }) {
@@ -10,7 +10,7 @@ function BookingUserList({ flight, onClose }) {
   }
 
   return (
-    <div className="fixed inset-[-16px] px-8 flex items-center justify-center p-4 bg-black bg-opacity-50 z-[999]" onClick={onClose}>
+    <div className="fixed inset-[-16px] px-8 flex items-center justify-center p-4 bg-black bg-opacity-60 z-[999]" onClick={onClose}>
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg" onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-4 py-3 bg-yellow-500 rounded-t-lg">

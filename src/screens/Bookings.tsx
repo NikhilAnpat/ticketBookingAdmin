@@ -7,11 +7,16 @@ import "react-date-range/dist/theme/default.css";
 import AddBooking from "../components/modal/addBooking";
 
 import bookingdata from "../components/dummyData/booking/FlightBookingData.json";
-import {
+import type {
   BookingRowProps,
   Flight,
-} from "../components/interfaces/bookinginterface";
+} from "../components/interfaces/bookingInterface";
 import BookingUserDetails from "../components/modal/bookingUserList";
+
+interface Person {
+  image: string;
+  name: string;
+}
 
 const BookingRow: React.FC<BookingRowProps> = ({ flight }) => {
   const [showPopup, setShowPopup] = useState(false);
@@ -61,7 +66,7 @@ const BookingRow: React.FC<BookingRowProps> = ({ flight }) => {
               className="flex justify-center items-center text-[12px] sm:text-[14px] sm:-space-x-2 cursor-pointer"
               onClick={() => setShowPopup(true)}
             >
-              {flight.people.slice(0, 3).map((person, i) => (
+              {(flight.people as Person[]).slice(0, 3).map((person, i) => (
                 <img
                   key={i}
                   src={
@@ -115,11 +120,11 @@ const BookingRow: React.FC<BookingRowProps> = ({ flight }) => {
               <span className="flex justify-center items-center text-[10px]">
                 Duration: {flight.range.duration}
               </span>
-              <div className="flex justify-center items-center w-[100%]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#E5C87C]"></span>
-                <div className="h-0.5 w-full bg-[#E5C87C]"></div>
-                <span className="h-1.5 w-1.5 rounded-full bg-[#E5C87C]"></span>
-              </div>
+                <div className="flex justify-center items-center w-[100%]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#E5C87C]"></span>
+                  <div className="h-0.5 w-full bg-[#E5C87C]"></div>
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#E5C87C]"></span>
+                </div>
               <div className="flex items-center justify-between">
                 <span className="text-[10px]">{flight.range.st}</span>
                 <span className="text-[10px]">{flight.range.ed}</span>
@@ -146,7 +151,7 @@ export default function Bookings() {
   const [showAirlineDropdown, setShowAirlineDropdown] = useState(false);
   const [showStatusDropdown, setShowStatusDropdown] = useState(false);
   const [showDepartureDropdown, setShowDepartureDropdown] = useState(false);
-    const [isAddBookingOpen, setIsAddBookingOpen] = useState(false);
+  const [isAddBookingOpen, setIsAddBookingOpen] = useState(false);
 
   const [dateRange, setDateRange] = useState<Range[]>([
     {
@@ -164,16 +169,14 @@ export default function Bookings() {
   ]);
   const [selectedAirline, setSelectedAirline] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-  const [selectedDeparture, setSelectedDeparture] = useState<string | null>(
-    null
-  );
+  const [selectedDeparture, setSelectedDeparture] = useState<string | null>(null);
 
   const datePickerRef = useRef<HTMLDivElement>(null);
   const airlineRef = useRef<HTMLDivElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
   const departureRef = useRef<HTMLDivElement>(null);
 
-  const formatDateRange = (start: Date | undefined, end: Date | undefined) => {
+  const formatDateRange = (start: Date | undefined, end: Date | undefined): string => {
     if (!start || !end) return "Date Range";
     const startDate = start.getDate();
     const endDate = end.getDate();
@@ -187,7 +190,7 @@ export default function Bookings() {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: MouseEvent): void => {
       if (
         datePickerRef.current &&
         !datePickerRef.current.contains(event.target as Node)
@@ -224,7 +227,7 @@ export default function Bookings() {
     new Set((bookingdata as Flight[]).map((flight) => flight.flightName))
   );
 
-  const statusOptions = ["Confirmed", "Pending", "Cancelled"];
+  const statusOptions = ["Confirmed", "Pending", "Cancelled"] as const;
 
   const departureTimes = [
     "12:00 AM",
@@ -251,7 +254,7 @@ export default function Bookings() {
     "9:00 PM",
     "10:00 PM",
     "11:00 PM",
-  ];
+  ] as const;
 
   const filteredFlights = (bookingdata as Flight[]).filter((flight) => {
     const flightDate = new Date(flight.date);
@@ -277,20 +280,20 @@ export default function Bookings() {
     );
   });
 
-  const handleDateSelect = (ranges: RangeKeyDict) => {
+  const handleDateSelect = (ranges: RangeKeyDict): void => {
     setTempDateRange([ranges.selection]);
   };
 
-  const applyDateRange = () => {
+  const applyDateRange = (): void => {
     setDateRange(tempDateRange);
     setShowDatePicker(false);
   };
 
   return (
     <>
-    <div className="p-3 bg-gray-50">
-      <div className="flex flex-col-reverse items-start gap-2 mb-6 sm:flex-row sm:gap-0 sm:justify-between sm:items-center">
-        <div className="flex flex-row justify-center space-x-2 sm:items-center ">
+    <div className="p-3 overflow-hidden bg-gray-50">
+      <div className="flex flex-col-reverse items-start gap-2 p-3 left-[13rem] top-10 sm:flex-row sm:gap-0 sm:justify-between sm:items-center bg-gray-50  ">
+        <div className="flex flex-row justify-center space-x-2 sm:items-center">
           <div className="flex gap-2">
             {/* Date Range Filter */}
             <div className="relative" ref={datePickerRef}>
@@ -453,7 +456,7 @@ export default function Bookings() {
         )}
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 mt-[10px] sm:mt-[20px] overflow-y-auto max-h-[calc(100vh-200px)]">
         {filteredFlights.length > 0 ? (
           filteredFlights.map((flight, index) => (
             <BookingRow key={index} flight={flight} />
