@@ -1,9 +1,9 @@
+
 import { useState, useEffect } from "react";
 import { Search, ArrowRight, Filter } from "lucide-react";
 import FlightDetail from "./FlightDetail";
 import { Flight } from "../components/interfaces/sheuduleInterface";
 import AddFlight from "../components/modal/addFlight";
-
 const flights: Flight[] = [
   {
     id: "1",
@@ -46,6 +46,7 @@ const flights: Flight[] = [
       city: "New York",
       code: "JFK",
       airport: "John F. Kennedy International Airport",
+
     },
     duration: "3.5 hours",
     price: 400,
